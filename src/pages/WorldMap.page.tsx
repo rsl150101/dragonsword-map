@@ -1,5 +1,11 @@
+import { GameMap } from "../features/map";
+
 function WorldMap() {
-  return <></>;
+  return (
+    <>
+      <GameMap />
+    </>
+  );
 }
 
 export default WorldMap;
