@@ -2,6 +2,7 @@ import styled from "styled-components";
 import * as L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { ImageOverlay, MapContainer } from "react-leaflet";
+import MapMarker from "./MapMarker";
 
 const WorldMapContainer = styled.div`
   width: 100%;
@@ -31,11 +32,13 @@ export function GameMap() {
         maxBounds={bounds}
         center={[mapHeight / 2, mapWidth / 2]}
         zoom={-1}
-        minZoom={-3}
+        minZoom={-2}
         maxZoom={2}
         attributionControl={false}
       >
         <ImageOverlay url="/map.webp" bounds={bounds} />
+        <MapMarker position={[mapHeight / 2, mapWidth / 2]} iconUrl={"/windmill-icon.png"} />
+        <MapMarker position={[4000, 4500]} iconUrl={"castle-icon.png"} />
       </StyledMapContainer>
     </WorldMapContainer>
   );
