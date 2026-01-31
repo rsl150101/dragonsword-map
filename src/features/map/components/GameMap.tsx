@@ -2,10 +2,14 @@ import styled from "styled-components";
 import * as L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { ImageOverlay, MapContainer } from "react-leaflet";
+
 import MapMarker from "./MapMarker";
 import LocationLogger from "./LocationLogger";
+import CustomZoomControl from "./CustomZoomControl";
+import { useState } from "react";
 
 const WorldMapContainer = styled.div`
+  display: flex;
   width: 100%;
   height: 100%;
   background-color: #141921;
@@ -15,6 +19,18 @@ const StyledMapContainer = styled(MapContainer)`
   width: 100%;
   height: 100%;
   background-color: transparent;
+  flex: 1;
+  position: relative;
+`;
+
+const ControllerWrapper = styled.div`
+  width: 60px;
+  background: transparent;
+  position: relative;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 const mapWidth = 7430;
@@ -25,9 +41,12 @@ const bounds: L.LatLngBoundsExpression = [
 ];
 
 export function GameMap() {
+  const [map, setMap] = useState<L.Map | null>(null);
+
   return (
     <WorldMapContainer>
       <StyledMapContainer
+        ref={(element) => setMap(element)}
         crs={L.CRS.Simple}
         bounds={bounds}
         maxBounds={bounds}
@@ -36,6 +55,7 @@ export function GameMap() {
         minZoom={-2}
         maxZoom={2}
         attributionControl={false}
+        zoomControl={false}
       >
         <LocationLogger />
         <ImageOverlay url="/map.webp" bounds={bounds} />
@@ -107,6 +127,7 @@ export function GameMap() {
 
         <MapMarker position={[3289, 3798]} iconUrl={"trait-dungeon-icon-on.png"} />
       </StyledMapContainer>
+      <ControllerWrapper>{map && <CustomZoomControl map={map} />}</ControllerWrapper>
     </WorldMapContainer>
   );
 }

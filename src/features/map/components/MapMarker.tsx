@@ -2,12 +2,12 @@ import { useState } from "react";
 import { Marker, useMapEvents } from "react-leaflet";
 import * as L from "leaflet";
 
-interface MapMarkerProps {
+interface IMapMarkerProps {
   position: [number, number];
   iconUrl: string;
 }
 
-function MapMarker({ position, iconUrl }: MapMarkerProps) {
+function MapMarker({ position, iconUrl }: IMapMarkerProps) {
   const [currentSize, setCurrentSize] = useState(40);
 
   useMapEvents({
