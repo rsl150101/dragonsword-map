@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styled, { css } from "styled-components";
 import { FaCheck, FaChevronDown, FaChevronUp, FaRegSquare } from "react-icons/fa";
-import { FILTER_DATA, type IFilterItem } from "../data/mapFilters";
+import { COUNTABLE_TYPES, FILTER_DATA, type IFilterItem } from "../data/mapFilters";
 import { useMapStore } from "../../../store/useMapStore";
 
 const FilterWrapper = styled.div`
@@ -118,7 +118,7 @@ const ItemLabel = styled.span`
 `;
 
 function MapFilter() {
-  const { selectedFilters, toggleFilter, isAllVisible, setAllFilters } = useMapStore();
+  const { selectedFilters, toggleFilter, isAllVisible, setAllFilters, getProgress } = useMapStore();
   const [openCategories, setOpenCategories] = useState<Set<string>>(
     new Set(FILTER_DATA.map((d) => d.category)),
   );
@@ -189,6 +189,11 @@ function MapFilter() {
             <GridContainer $isOpen={isOpen}>
               {group.items.map((item) => {
                 const isActive = selectedFilters.has(item.id);
+                const isCountable = COUNTABLE_TYPES.has(item.id);
+
+                const { current, total } = isCountable
+                  ? getProgress(item.id)
+                  : { current: 0, total: 0 };
 
                 return (
                   <FilterItemButton
@@ -198,7 +203,21 @@ function MapFilter() {
                     title={item.label}
                   >
                     {renderIcon(item)}
-                    <ItemLabel>{item.label}</ItemLabel>
+                    <ItemLabel>
+                      {item.label}
+                      {isCountable && total > 0 && (
+                        <span
+                          style={{
+                            fontSize: "9px",
+                            color: current === total ? "#4caf50" : "#888",
+                            marginLeft: "2px",
+                            fontWeight: "bold",
+                          }}
+                        >
+                          ({current}/{total})
+                        </span>
+                      )}
+                    </ItemLabel>
                   </FilterItemButton>
                 );
               })}

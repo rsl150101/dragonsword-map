@@ -13,13 +13,23 @@ export interface ICategoryItem {
   items: IFilterItem[];
 }
 
+export const COUNTABLE_TYPES = new Set([
+  "world_boss",
+  "puzzle",
+  "marmot",
+  // "chest",
+  // "special_chest",
+  // "squirrel",
+  // "bird_egg"
+]);
+
 export const FILTER_DATA: ICategoryItem[] = [
   {
     category: "이동/거점",
     items: [
       { id: "warp", label: "워프포인트", icon: "warp-point-icon-on.png" },
       { id: "statue", label: "여신상", icon: "statue-icon.png" },
-      { id: "merchant", label: "상점", icon: "merchant-icon.png" },
+      { id: "merchant", label: "상점", icon: "merchant-icon-on.png" },
       { id: "windmill", label: "에오나", icon: "windmill-icon.png" },
       { id: "building", label: "건물", icon: FaBuildingColumns },
       { id: "workshop", label: "공방", icon: GiBlacksmith },

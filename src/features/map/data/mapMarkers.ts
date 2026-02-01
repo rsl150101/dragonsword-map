@@ -33,11 +33,11 @@ export const MAP_MARKERS: IMarkerData[] = [
   { id: "statue_7", type: "statue", position: [1900, 3814] },
   { id: "statue_8", type: "statue", position: [1793, 2884] },
 
-  { id: "merchant_1", type: "merchant", position: [3116, 2794] },
-  { id: "merchant_2", type: "merchant", position: [3710, 2725] },
-  { id: "merchant_3", type: "merchant", position: [3503, 2590] },
-  { id: "merchant_4", type: "merchant", position: [3649, 2613] },
-  { id: "merchant_5", type: "merchant", position: [1863, 3531] },
+  { id: "merchant_1", type: "merchant", position: [3116, 2794], icon: "merchant-icon.png" },
+  { id: "merchant_2", type: "merchant", position: [3710, 2725], icon: "merchant-icon.png" },
+  { id: "merchant_3", type: "merchant", position: [3503, 2590], icon: "merchant-icon.png" },
+  { id: "merchant_4", type: "merchant", position: [3649, 2613], icon: "merchant-icon.png" },
+  { id: "merchant_5", type: "merchant", position: [1863, 3531], icon: "merchant-icon.png" },
 
   { id: "windmill_1", type: "windmill", position: [4939, 5142] },
   { id: "windmill_2", type: "windmill", position: [4825, 2668] },
@@ -79,7 +79,7 @@ export const MAP_MARKERS: IMarkerData[] = [
   { id: "world_boss_1", type: "world_boss", position: [6247, 5592] },
   { id: "world_boss_2", type: "world_boss", position: [5349, 6008] },
   { id: "world_boss_3", type: "world_boss", position: [4925, 2758] },
-  { id: "world_boss_4", type: "world_boss", position: [4025, 4895] },
+  { id: "world_boss_4", type: "world_boss", position: [4053, 4918] },
   { id: "world_boss_5", type: "world_boss", position: [2311, 3152] },
 
   // 탐험/보물
@@ -119,6 +119,7 @@ export const MAP_MARKERS: IMarkerData[] = [
   { id: "marmot_34", type: "marmot", position: [2942, 1981] },
   { id: "marmot_35", type: "marmot", position: [3314, 2958] },
   { id: "marmot_36", type: "marmot", position: [3129, 2777] },
+  { id: "marmot_37", type: "marmot", position: [3693, 3994] },
 
   { id: "puzzle_1", type: "puzzle", position: [1537, 2306] },
   { id: "puzzle_2", type: "puzzle", position: [1595, 3244] },
@@ -141,7 +142,7 @@ export const MAP_MARKERS: IMarkerData[] = [
   { id: "puzzle_19", type: "puzzle", position: [3382, 4474] },
   { id: "puzzle_20", type: "puzzle", position: [3436, 4059] },
   { id: "puzzle_21", type: "puzzle", position: [3625, 4897] },
-  { id: "puzzle_22", type: "puzzle", position: [4007, 4844] },
+  { id: "puzzle_22", type: "puzzle", position: [4051, 4896] },
   { id: "puzzle_23", type: "puzzle", position: [4100, 4201] },
   { id: "puzzle_24", type: "puzzle", position: [3819, 3838] },
   { id: "puzzle_25", type: "puzzle", position: [4006, 3195] },

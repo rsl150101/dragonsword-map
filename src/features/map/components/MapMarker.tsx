@@ -7,9 +7,11 @@ import type { IconType } from "react-icons";
 interface IMapMarkerProps {
   position: [number, number];
   icon: string | IconType;
+  isCollected: boolean;
+  onClick?: (() => void) | undefined;
 }
 
-function MapMarker({ position, icon }: IMapMarkerProps) {
+function MapMarker({ position, icon, isCollected, onClick }: IMapMarkerProps) {
   const [currentSize, setCurrentSize] = useState(40);
 
   useMapEvents({
@@ -22,9 +24,31 @@ function MapMarker({ position, icon }: IMapMarkerProps) {
   });
 
   const customIcon = useMemo(() => {
+    const commonStyle = {
+      opacity: isCollected ? 0.8 : 1,
+      filter: isCollected
+        ? "grayscale(100%) drop-shadow(1px 1px 1px rgba(0,0,0,0.3))"
+        : "drop-shadow(3px 3px 3px rgba(0,0,0,0.5))",
+      transition: "all 0.3s ease",
+    };
+
     if (typeof icon === "string") {
-      return new L.Icon({
-        iconUrl: icon,
+      const imgHtml = renderToStaticMarkup(
+        <img
+          src={icon}
+          alt="marker"
+          style={{
+            ...commonStyle,
+            width: `${currentSize}px`,
+            height: `${currentSize}px`,
+            objectFit: "contain",
+          }}
+        />,
+      );
+
+      return new L.DivIcon({
+        html: imgHtml,
+        className: "",
         iconSize: [currentSize, currentSize],
         iconAnchor: [currentSize / 2, currentSize],
       });
@@ -34,11 +58,13 @@ function MapMarker({ position, icon }: IMapMarkerProps) {
       const iconHtml = renderToStaticMarkup(
         <div
           style={{
-            color: "#80AEFE",
+            ...commonStyle,
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            filter: "drop-shadow(2px 2px 2px rgba(0,0,0,0.5))",
+            color: "#80AEFE",
+            width: `${currentSize - 8}px`,
+            height: `${currentSize - 8}px`,
           }}
         >
           <IconComponent size={currentSize} />
@@ -47,14 +73,25 @@ function MapMarker({ position, icon }: IMapMarkerProps) {
 
       return new L.DivIcon({
         html: iconHtml,
-        className: "custom-react-marker",
+        className: "",
         iconSize: [currentSize - 8, currentSize - 8],
-        iconAnchor: [(currentSize - 8) / 2, currentSize - 8],
+        iconAnchor: [currentSize / 2, currentSize / 2],
       });
     }
-  }, [icon, currentSize]);
+  }, [icon, currentSize, isCollected]);
 
-  return <Marker position={position} icon={customIcon} />;
+  return (
+    <Marker
+      position={position}
+      icon={customIcon}
+      eventHandlers={{
+        click: (e) => {
+          L.DomEvent.stopPropagation(e.originalEvent);
+          if (onClick) onClick();
+        },
+      }}
+    />
+  );
 }
 
 export default MapMarker;

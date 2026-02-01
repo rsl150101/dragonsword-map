@@ -9,7 +9,7 @@ import LocationLogger from "./LocationLogger";
 import CustomZoomControl from "./CustomZoomControl";
 import { useMapStore } from "../../../store/useMapStore";
 import { MAP_MARKERS } from "../data/mapMarkers";
-import { FILTER_DATA } from "../data/mapFilters";
+import { COUNTABLE_TYPES, FILTER_DATA } from "../data/mapFilters";
 
 const WorldMapContainer = styled.div`
   display: flex;
@@ -53,7 +53,7 @@ const getIconForType = (type: string) => {
 
 export function GameMap() {
   const [map, setMap] = useState<L.Map | null>(null);
-  const { selectedFilters } = useMapStore();
+  const { selectedFilters, collectedMarkers, toggleCollected } = useMapStore();
 
   return (
     <WorldMapContainer>
@@ -80,7 +80,18 @@ export function GameMap() {
 
           const iconUrl = marker.icon || getIconForType(marker.type);
 
-          return <MapMarker key={marker.id} position={marker.position} icon={iconUrl} />;
+          const isCollected = collectedMarkers.includes(marker.id);
+          const isCountable = COUNTABLE_TYPES.has(marker.type);
+
+          return (
+            <MapMarker
+              key={marker.id}
+              position={marker.position}
+              icon={iconUrl}
+              isCollected={isCollected}
+              onClick={isCountable ? () => toggleCollected(marker.id) : undefined}
+            />
+          );
         })}
       </StyledMapContainer>
       <ControllerWrapper>{map && <CustomZoomControl map={map} />}</ControllerWrapper>
