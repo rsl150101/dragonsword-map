@@ -1,16 +1,5 @@
 import styled from "styled-components";
 
-const Header = () => {
-  return (
-    <HeaderContainer>
-      <Logo>Dracarta</Logo>
-      <Nav></Nav>
-    </HeaderContainer>
-  );
-};
-
-export default Header;
-
 const HeaderContainer = styled.header`
   height: 60px;
   background-color: #222;
@@ -20,6 +9,7 @@ const HeaderContainer = styled.header`
   justify-content: space-between;
   padding: 0 20px;
   border-bottom: 1px solid #444;
+  user-select: none;
 `;
 
 const Logo = styled.h1`
@@ -34,3 +24,14 @@ const Nav = styled.div`
   font-size: 0.9rem;
   cursor: pointer;
 `;
+
+const Header = () => {
+  return (
+    <HeaderContainer>
+      <Logo>Dracarta</Logo>
+      <Nav></Nav>
+    </HeaderContainer>
+  );
+};
+
+export default Header;

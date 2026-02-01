@@ -13,6 +13,8 @@ const FooterContainer = styled.footer`
   text-align: center;
   gap: 10px;
   border-top: 1px solid #222;
+  user-select: none;
+
   strong {
     color: #e0e0e0;
     font-weight: bold;

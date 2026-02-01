@@ -9,6 +9,7 @@ const ControllerContainer = styled.div`
   flex-direction: "column";
   align-items: "center";
   gap: "5px";
+  user-select: none;
 `;
 
 const ControllerBtn = styled.div`
