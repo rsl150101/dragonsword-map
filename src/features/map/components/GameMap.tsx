@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import * as L from "leaflet";
 import "leaflet/dist/leaflet.css";
-import { ImageOverlay, MapContainer } from "react-leaflet";
+import { ImageOverlay, MapContainer, useMapEvents } from "react-leaflet";
 import { useState } from "react";
 
 import MapMarker from "./MapMarker";
@@ -10,6 +10,7 @@ import CustomZoomControl from "./CustomZoomControl";
 import { useMapStore } from "../../../store/useMapStore";
 import { MAP_MARKERS } from "../data/mapMarkers";
 import { COUNTABLE_TYPES, FILTER_DATA } from "../data/mapFilters";
+import { useShallow } from "zustand/shallow";
 
 const WorldMapContainer = styled.div`
   display: flex;
@@ -51,9 +52,31 @@ const getIconForType = (type: string) => {
   return "";
 };
 
+function MapEvents({ onZoomChange }: { onZoomChange: (zoom: number) => void }) {
+  useMapEvents({
+    zoomanim: (e) => {
+      onZoomChange(e.zoom);
+    },
+    zoomend: (e) => {
+      onZoomChange(e.target.getZoom());
+    },
+  });
+  return null;
+}
+
 export function GameMap() {
   const [map, setMap] = useState<L.Map | null>(null);
-  const { selectedFilters, collectedMarkers, toggleCollected } = useMapStore();
+  const [currentZoom, setCurrentZoom] = useState(-1);
+
+  const { selectedFilters, collectedMarkers, toggleCollected } = useMapStore(
+    useShallow((state) => ({
+      selectedFilters: state.selectedFilters,
+      collectedMarkers: state.collectedMarkers,
+      toggleCollected: state.toggleCollected,
+    })),
+  );
+
+  const markerSize = 32 + (currentZoom + 2) * 8;
 
   return (
     <WorldMapContainer>
@@ -64,12 +87,13 @@ export function GameMap() {
         maxBounds={bounds}
         center={[mapHeight / 2, mapWidth / 2]}
         zoom={-1}
-        minZoom={-2}
-        maxZoom={2}
+        minZoom={-3}
+        maxZoom={1}
         attributionControl={false}
         zoomControl={false}
         doubleClickZoom={false}
       >
+        <MapEvents onZoomChange={setCurrentZoom} />
         <LocationLogger />
         <ImageOverlay url="/map.webp" bounds={bounds} />
 
@@ -90,6 +114,7 @@ export function GameMap() {
               icon={iconUrl}
               isCollected={isCollected}
               onClick={isCountable ? () => toggleCollected(marker.id) : undefined}
+              size={markerSize}
             />
           );
         })}

@@ -3,6 +3,7 @@ import styled, { css } from "styled-components";
 import { FaCheck, FaChevronDown, FaChevronUp, FaRegSquare } from "react-icons/fa";
 import { COUNTABLE_TYPES, FILTER_DATA, type IFilterItem } from "../data/mapFilters";
 import { useMapStore } from "../../../store/useMapStore";
+import { useShallow } from "zustand/shallow";
 
 const FilterWrapper = styled.div`
   display: flex;
@@ -118,7 +119,15 @@ const ItemLabel = styled.span`
 `;
 
 function MapFilter() {
-  const { selectedFilters, toggleFilter, isAllVisible, setAllFilters, getProgress } = useMapStore();
+  const { selectedFilters, toggleFilter, isAllVisible, setAllFilters, getProgress } = useMapStore(
+    useShallow((state) => ({
+      selectedFilters: state.selectedFilters,
+      toggleFilter: state.toggleFilter,
+      isAllVisible: state.isAllVisible,
+      setAllFilters: state.setAllFilters,
+      getProgress: state.getProgress,
+    })),
+  );
   const [openCategories, setOpenCategories] = useState<Set<string>>(
     new Set(FILTER_DATA.map((d) => d.category)),
   );

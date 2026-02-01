@@ -63,7 +63,7 @@ function CustomZoomControl({ map }: ICustomZoomControl) {
     };
   }, [map]);
 
-  const percentage = (zoom + 2) * 25;
+  const percentage = (zoom + 3) * 25;
 
   return (
     <ControllerContainer>
