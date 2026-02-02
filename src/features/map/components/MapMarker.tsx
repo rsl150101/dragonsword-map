@@ -11,9 +11,18 @@ interface IMapMarkerProps {
   isCollected: boolean;
   onClick?: (() => void) | undefined;
   size: number;
+  onLeftClick?: () => void;
+  onRightClick?: () => void;
 }
 
-function MapMarker({ position, icon, isCollected, onClick, size }: IMapMarkerProps) {
+function MapMarker({
+  position,
+  icon,
+  isCollected,
+  size,
+  onLeftClick,
+  onRightClick,
+}: IMapMarkerProps) {
   const customIcon = useMemo(() => {
     const mainIconStyle = {
       opacity: isCollected ? 0.5 : 1,
@@ -86,7 +95,12 @@ function MapMarker({ position, icon, isCollected, onClick, size }: IMapMarkerPro
       eventHandlers={{
         click: (e) => {
           L.DomEvent.stopPropagation(e.originalEvent);
-          if (onClick) onClick();
+          if (onLeftClick) onLeftClick();
+        },
+        contextmenu: (e) => {
+          L.DomEvent.stopPropagation(e.originalEvent);
+          e.originalEvent.preventDefault();
+          if (onRightClick) onRightClick();
         },
       }}
     />

@@ -12,6 +12,8 @@ interface MapState {
   collectedMarkers: string[];
   toggleCollected: (markerId: string) => void;
   getProgress: (type?: string) => { current: number; total: number };
+  focusedMarkerId: string | null;
+  setFocusedMarkerId: (id: string | null) => void;
 }
 
 export const useMapStore = create<MapState>()(
@@ -20,6 +22,8 @@ export const useMapStore = create<MapState>()(
       selectedFilters: new Set(
         FILTER_DATA.flatMap((category) => category.items.map((item) => item.id)),
       ),
+      collectedMarkers: [],
+      focusedMarkerId: null,
 
       toggleFilter: (id) =>
         set((state) => {
@@ -45,8 +49,6 @@ export const useMapStore = create<MapState>()(
           }
           return { selectedFilters: new Set() };
         }),
-
-      collectedMarkers: [],
 
       toggleCollected: (markerId) =>
         set((state) => {
@@ -79,6 +81,8 @@ export const useMapStore = create<MapState>()(
 
         return { current, total };
       },
+
+      setFocusedMarkerId: (id) => set({ focusedMarkerId: id }),
     }),
     {
       name: "map-storage",

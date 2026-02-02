@@ -70,11 +70,12 @@ export function GameMap() {
   const [map, setMap] = useState<L.Map | null>(null);
   const [currentZoom, setCurrentZoom] = useState(-1);
 
-  const { selectedFilters, collectedMarkers, toggleCollected } = useMapStore(
+  const { selectedFilters, collectedMarkers, toggleCollected, setFocusedMarkerId } = useMapStore(
     useShallow((state) => ({
       selectedFilters: state.selectedFilters,
       collectedMarkers: state.collectedMarkers,
       toggleCollected: state.toggleCollected,
+      setFocusedMarkerId: state.setFocusedMarkerId,
     })),
   );
 
@@ -136,7 +137,8 @@ export function GameMap() {
                 position={marker.position}
                 icon={iconUrl}
                 isCollected={isCollected}
-                onClick={isCountable ? () => toggleCollected(marker.id) : undefined}
+                onLeftClick={() => setFocusedMarkerId(marker.id)}
+                onRightClick={isCountable ? () => toggleCollected(marker.id) : undefined}
                 size={markerSize}
               />
             );

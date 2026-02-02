@@ -4,6 +4,7 @@ import styled from "styled-components";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Sidebar from "./components/Sidebar";
+import GuideModal from "../features/map/components/GuideModal";
 
 const LayoutContainer = styled.div`
   display: flex;
@@ -33,6 +34,7 @@ function MainLayout() {
         <Sidebar />
         <ContentWrapper>
           <Outlet />
+          <GuideModal />
         </ContentWrapper>
       </MainWrapper>
       <Footer />
