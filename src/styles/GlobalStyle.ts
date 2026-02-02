@@ -62,6 +62,26 @@ a {
 ::-webkit-scrollbar{
   display: none;
 }
+
+.custom-cluster-icon {
+  background: rgba(44, 50, 61, 0.9);
+  border: 2px solid #fff;
+  border-radius: 50%;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 14px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+  transition: all 0.2s ease;
+}
+
+.custom-cluster-icon:hover {
+  background: #1976d2;
+  transform: scale(1.1);
+  z-index: 1000;
+}
 `;
 
 export default GlobalStyle;

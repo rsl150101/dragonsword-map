@@ -3,6 +3,9 @@ import * as L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { ImageOverlay, MapContainer, useMapEvents } from "react-leaflet";
 import { useState } from "react";
+import { useShallow } from "zustand/shallow";
+import MarkerClusterGroup from "react-leaflet-cluster";
+import "leaflet.markercluster";
 
 import MapMarker from "./MapMarker";
 import LocationLogger from "./LocationLogger";
@@ -10,7 +13,6 @@ import CustomZoomControl from "./CustomZoomControl";
 import { useMapStore } from "../../../store/useMapStore";
 import { MAP_MARKERS } from "../data/mapMarkers";
 import { COUNTABLE_TYPES, FILTER_DATA } from "../data/mapFilters";
-import { useShallow } from "zustand/shallow";
 
 const WorldMapContainer = styled.div`
   display: flex;
@@ -78,6 +80,20 @@ export function GameMap() {
 
   const markerSize = 32 + (currentZoom + 2) * 8;
 
+  const createCustomClusterIcon = (cluster: L.MarkerCluster) => {
+    const count = cluster.getChildCount();
+
+    let size = 40;
+    if (count > 10) size = 50;
+    if (count > 50) size = 60;
+
+    return new L.DivIcon({
+      html: `<span>${count}</span>`,
+      className: "custom-cluster-icon",
+      iconSize: L.point(size, size, true),
+    });
+  };
+
   return (
     <WorldMapContainer>
       <StyledMapContainer
@@ -96,28 +112,36 @@ export function GameMap() {
         <MapEvents onZoomChange={setCurrentZoom} />
         <LocationLogger />
         <ImageOverlay url="/map.webp" bounds={bounds} />
+        <MarkerClusterGroup
+          chunkedLoading
+          iconCreateFunction={createCustomClusterIcon}
+          maxClusterRadius={60}
+          disableClusteringAtZoom={-1}
+          showCoverageOnHover={false}
+          spiderfyOnMaxZoom={false}
+        >
+          {MAP_MARKERS.map((marker) => {
+            if (!selectedFilters.has(marker.type)) {
+              return null;
+            }
 
-        {MAP_MARKERS.map((marker) => {
-          if (!selectedFilters.has(marker.type)) {
-            return null;
-          }
+            const iconUrl = marker.icon || getIconForType(marker.type);
 
-          const iconUrl = marker.icon || getIconForType(marker.type);
+            const isCollected = collectedMarkers.includes(marker.id);
+            const isCountable = COUNTABLE_TYPES.has(marker.type);
 
-          const isCollected = collectedMarkers.includes(marker.id);
-          const isCountable = COUNTABLE_TYPES.has(marker.type);
-
-          return (
-            <MapMarker
-              key={marker.id}
-              position={marker.position}
-              icon={iconUrl}
-              isCollected={isCollected}
-              onClick={isCountable ? () => toggleCollected(marker.id) : undefined}
-              size={markerSize}
-            />
-          );
-        })}
+            return (
+              <MapMarker
+                key={marker.id}
+                position={marker.position}
+                icon={iconUrl}
+                isCollected={isCollected}
+                onClick={isCountable ? () => toggleCollected(marker.id) : undefined}
+                size={markerSize}
+              />
+            );
+          })}
+        </MarkerClusterGroup>
       </StyledMapContainer>
       <ControllerWrapper>{map && <CustomZoomControl map={map} />}</ControllerWrapper>
     </WorldMapContainer>

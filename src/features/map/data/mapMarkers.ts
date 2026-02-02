@@ -118,7 +118,7 @@ export const MAP_MARKERS: IMarkerData[] = [
   { id: "marmot_33", type: "marmot", position: [1657, 3607] },
   { id: "marmot_34", type: "marmot", position: [2942, 1981] },
   { id: "marmot_35", type: "marmot", position: [3314, 2958] },
-  { id: "marmot_36", type: "marmot", position: [3129, 2777] },
+  { id: "marmot_36", type: "marmot", position: [3156, 2744] },
   { id: "marmot_37", type: "marmot", position: [3693, 3994] },
 
   { id: "puzzle_1", type: "puzzle", position: [1537, 2306] },
