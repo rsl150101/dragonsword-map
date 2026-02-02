@@ -1,6 +1,13 @@
 import type { IconType } from "react-icons";
 import { FaEgg, FaGamepad, FaPuzzlePiece, FaBuildingColumns } from "react-icons/fa6";
-import { GiSquirrel, GiOpenChest, GiOpenTreasureChest, GiBlacksmith } from "react-icons/gi";
+import {
+  GiSquirrel,
+  GiOpenChest,
+  GiOpenTreasureChest,
+  GiBlacksmith,
+  GiPotato,
+  GiMushrooms,
+} from "react-icons/gi";
 
 export interface IFilterItem {
   id: string;
@@ -23,6 +30,13 @@ export const COUNTABLE_TYPES = new Set([
   // "bird_egg"
 ]);
 
+export const RESPAWN_TIMES: Record<string, number> = {
+  squirrel: 12 * 60 * 60 * 1000,
+  potato: 4 * 60 * 60 * 1000,
+  bird_egg: 4 * 60 * 60 * 1000,
+  blue_lotus_mushroom: 4 * 60 * 60 * 1000,
+};
+
 export const FILTER_DATA: ICategoryItem[] = [
   {
     category: "이동/거점",
@@ -44,13 +58,15 @@ export const FILTER_DATA: ICategoryItem[] = [
       { id: "world_boss", label: "월드 보스", icon: "world-boss-icon-on.png" },
     ],
   },
-  // {
-  //   category: "채집/파밍(구현 중)",
-  //   items: [
-  //     { id: "squirrel", label: "다람쥐", icon: GiSquirrel },
-  //     { id: "bird_egg", label: "알", icon: FaEgg },
-  //   ],
-  // },
+  {
+    category: "채집/파밍",
+    items: [
+      { id: "squirrel", label: "다람쥐", icon: GiSquirrel },
+      { id: "potato", label: "감자", icon: GiPotato },
+      { id: "blue_lotus_mushroom", label: "푸른 연꽃 버섯", icon: GiMushrooms },
+      // { id: "bird_egg", label: "알", icon: FaEgg },
+    ],
+  },
   {
     category: "탐험/보물",
     items: [

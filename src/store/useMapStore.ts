@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
-import { COUNTABLE_TYPES, FILTER_DATA } from "../features/map/data/mapFilters";
+import { COUNTABLE_TYPES, FILTER_DATA, RESPAWN_TIMES } from "../features/map/data/mapFilters";
 import { MAP_MARKERS } from "../features/map/data/mapMarkers";
 
 interface MapState {
@@ -9,11 +9,12 @@ interface MapState {
   toggleFilter: (id: string) => void;
   isAllVisible: () => boolean;
   setAllFilters: (enable: boolean) => void;
-  collectedMarkers: string[];
+  collectedMarkers: Record<string, number>;
   toggleCollected: (markerId: string) => void;
   getProgress: (type?: string) => { current: number; total: number };
   focusedMarkerId: string | null;
   setFocusedMarkerId: (id: string | null) => void;
+  isCollected: (markerId: string, type: string) => boolean;
 }
 
 export const useMapStore = create<MapState>()(
@@ -22,7 +23,7 @@ export const useMapStore = create<MapState>()(
       selectedFilters: new Set(
         FILTER_DATA.flatMap((category) => category.items.map((item) => item.id)),
       ),
-      collectedMarkers: [],
+      collectedMarkers: {},
       focusedMarkerId: null,
 
       toggleFilter: (id) =>
@@ -52,22 +53,17 @@ export const useMapStore = create<MapState>()(
 
       toggleCollected: (markerId) =>
         set((state) => {
-          const targetMarker = MAP_MARKERS.find((m) => m.id === markerId);
-
-          if (!targetMarker || !COUNTABLE_TYPES.has(targetMarker.type)) {
-            return state;
-          }
-
-          const list = state.collectedMarkers;
-          if (list.includes(markerId)) {
-            return { collectedMarkers: list.filter((id) => id !== markerId) };
+          const newCollected = { ...state.collectedMarkers };
+          if (newCollected[markerId]) {
+            delete newCollected[markerId];
           } else {
-            return { collectedMarkers: [...list, markerId] };
+            newCollected[markerId] = Date.now();
           }
+          return { collectedMarkers: newCollected };
         }),
 
       getProgress: (targetType) => {
-        const { collectedMarkers } = get();
+        const { isCollected } = get();
 
         const targetMarkers = MAP_MARKERS.filter((m) => {
           const isCountable = COUNTABLE_TYPES.has(m.type);
@@ -77,12 +73,26 @@ export const useMapStore = create<MapState>()(
 
         const total = targetMarkers.length;
 
-        const current = targetMarkers.filter((m) => collectedMarkers.includes(m.id)).length;
+        const current = targetMarkers.filter((m) => isCollected(m.id, m.type)).length;
 
         return { current, total };
       },
 
       setFocusedMarkerId: (id) => set({ focusedMarkerId: id }),
+
+      isCollected: (markerId, type) => {
+        const collectedAt = get().collectedMarkers[markerId];
+        if (!collectedAt) return false;
+
+        const respawnDuration = RESPAWN_TIMES[type];
+
+        if (!respawnDuration) return true;
+
+        const now = Date.now();
+        const respawnAt = collectedAt + respawnDuration;
+
+        return now < respawnAt;
+      },
     }),
     {
       name: "map-storage",

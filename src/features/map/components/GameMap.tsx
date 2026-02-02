@@ -2,7 +2,7 @@ import styled from "styled-components";
 import * as L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { ImageOverlay, MapContainer, useMapEvents } from "react-leaflet";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useShallow } from "zustand/shallow";
 import MarkerClusterGroup from "react-leaflet-cluster";
 import "leaflet.markercluster";
@@ -12,7 +12,8 @@ import LocationLogger from "./LocationLogger";
 import CustomZoomControl from "./CustomZoomControl";
 import { useMapStore } from "../../../store/useMapStore";
 import { MAP_MARKERS } from "../data/mapMarkers";
-import { COUNTABLE_TYPES, FILTER_DATA } from "../data/mapFilters";
+import { COUNTABLE_TYPES, FILTER_DATA, RESPAWN_TIMES } from "../data/mapFilters";
+import MapPaths from "./MapPath";
 
 const WorldMapContainer = styled.div`
   display: flex;
@@ -69,6 +70,14 @@ function MapEvents({ onZoomChange }: { onZoomChange: (zoom: number) => void }) {
 export function GameMap() {
   const [map, setMap] = useState<L.Map | null>(null);
   const [currentZoom, setCurrentZoom] = useState(-1);
+  const [now, setNow] = useState(() => Date.now());
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setNow(Date.now());
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
 
   const { selectedFilters, collectedMarkers, toggleCollected, setFocusedMarkerId } = useMapStore(
     useShallow((state) => ({
@@ -95,6 +104,16 @@ export function GameMap() {
     });
   };
 
+  const checkIsCollected = (id: string, type: string) => {
+    const timestamp = collectedMarkers[id];
+    if (!timestamp) return false;
+
+    const duration = RESPAWN_TIMES[type];
+    if (!duration) return true;
+
+    return now < timestamp + duration;
+  };
+
   return (
     <WorldMapContainer>
       <StyledMapContainer
@@ -113,6 +132,7 @@ export function GameMap() {
         <MapEvents onZoomChange={setCurrentZoom} />
         <LocationLogger />
         <ImageOverlay url="/map.webp" bounds={bounds} />
+        <MapPaths />
         <MarkerClusterGroup
           chunkedLoading
           iconCreateFunction={createCustomClusterIcon}
@@ -128,8 +148,11 @@ export function GameMap() {
 
             const iconUrl = marker.icon || getIconForType(marker.type);
 
-            const isCollected = collectedMarkers.includes(marker.id);
+            const isCollected = checkIsCollected(marker.id, marker.type);
             const isCountable = COUNTABLE_TYPES.has(marker.type);
+            const hasRespawnTime = !!RESPAWN_TIMES[marker.type];
+
+            const allowedRightClick = isCountable || hasRespawnTime;
 
             return (
               <MapMarker
@@ -138,7 +161,7 @@ export function GameMap() {
                 icon={iconUrl}
                 isCollected={isCollected}
                 onLeftClick={() => setFocusedMarkerId(marker.id)}
-                onRightClick={isCountable ? () => toggleCollected(marker.id) : undefined}
+                onRightClick={allowedRightClick ? () => toggleCollected(marker.id) : undefined}
                 size={markerSize}
               />
             );

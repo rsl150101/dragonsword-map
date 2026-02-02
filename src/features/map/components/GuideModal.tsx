@@ -1,9 +1,11 @@
 import styled from "styled-components";
+import { FaTimes, FaCheck, FaUndo, FaExternalLinkAlt } from "react-icons/fa";
+import { useShallow } from "zustand/shallow";
+
 import { useMapStore } from "../../../store/useMapStore";
 import { MAP_MARKERS } from "../data/mapMarkers";
-import { FaTimes, FaCheck, FaUndo } from "react-icons/fa";
-import { COUNTABLE_TYPES } from "../data/mapFilters";
-import { useShallow } from "zustand/shallow";
+import { COUNTABLE_TYPES, RESPAWN_TIMES } from "../data/mapFilters";
+import { useRespawnTimer } from "../../../hooks/useRespawnTimer";
 
 const Overlay = styled.div`
   position: fixed;
@@ -88,6 +90,22 @@ const Description = styled.p`
   margin: 0;
 `;
 
+const SourceLink = styled.a`
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 10px;
+  color: #4da6ff;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+
+  &:hover {
+    text-decoration: underline;
+    color: #80c1ff;
+  }
+`;
+
 const ActionButton = styled.button<{ $isCollected: boolean }>`
   width: 100%;
   padding: 12px;
@@ -105,12 +123,12 @@ const ActionButton = styled.button<{ $isCollected: boolean }>`
   ${({ $isCollected }) =>
     $isCollected
       ? `
-      background: #444; 
+      background: #444;
       color: #aaa;
       &:hover { background: #555; color: white; }
     `
       : `
-      background: #4caf50; 
+      background: #4caf50;
       color: white;
       &:hover { background: #43a047; }
     `}
@@ -126,23 +144,25 @@ function GuideModal() {
     })),
   );
 
-  if (!focusedMarkerId) return null;
+  const marker = focusedMarkerId ? MAP_MARKERS.find((m) => m.id === focusedMarkerId) : undefined;
+  const collectedAt = marker ? collectedMarkers[marker.id] : undefined;
+  const markerType = marker ? marker.type : "";
+  const { timeLeft, isRespawned } = useRespawnTimer(collectedAt, markerType);
 
-  const marker = MAP_MARKERS.find((m) => m.id === focusedMarkerId);
-  if (!marker) return null;
+  if (!focusedMarkerId || !marker) return null;
 
   const isCountable = COUNTABLE_TYPES.has(marker.type);
-  const isCollected = collectedMarkers.includes(marker.id);
+  const hasRespawnTime = !!RESPAWN_TIMES[marker.type];
 
-  const handleToggle = () => {
-    toggleCollected(marker.id);
-  };
+  const showCollectButton = isCountable || hasRespawnTime;
+  const isCurrentlyCollected = !!collectedAt && !isRespawned;
 
   return (
     <Overlay onClick={() => setFocusedMarkerId(null)}>
       <ModalContainer onClick={(e) => e.stopPropagation()}>
         <Header>
           <Title>{marker.label}</Title>
+
           <CloseButton onClick={() => setFocusedMarkerId(null)}>
             <FaTimes size={20} />
           </CloseButton>
@@ -164,16 +184,41 @@ function GuideModal() {
             </div>
           )}
 
+          {isCurrentlyCollected && timeLeft && (
+            <div
+              style={{
+                background: "#333",
+                padding: "10px",
+                borderRadius: "6px",
+                textAlign: "center",
+                color: "#ff9800",
+                fontWeight: "bold",
+              }}
+            >
+              ⏳ {timeLeft}
+            </div>
+          )}
+
           <Description>{marker.description || "설명이 없습니다."}</Description>
-          {isCountable && (
-            <ActionButton onClick={handleToggle} $isCollected={isCollected}>
-              {isCollected ? (
+          {marker.sourceUrl && (
+            <SourceLink href={marker.sourceUrl} target="_blank" rel="noopener noreferrer">
+              <FaExternalLinkAlt size={12} />
+              출처: {marker.author}
+            </SourceLink>
+          )}
+
+          {showCollectButton && (
+            <ActionButton
+              onClick={() => toggleCollected(marker.id)}
+              $isCollected={isCurrentlyCollected}
+            >
+              {isCurrentlyCollected ? (
                 <>
-                  <FaUndo /> 수집 취소
+                  <FaUndo /> 취소
                 </>
               ) : (
                 <>
-                  <FaCheck /> 수집 완료
+                  <FaCheck /> 완료
                 </>
               )}
             </ActionButton>
