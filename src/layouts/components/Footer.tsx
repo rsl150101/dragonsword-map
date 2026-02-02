@@ -3,7 +3,7 @@ import styled from "styled-components";
 const FooterContainer = styled.footer`
   height: auto;
   padding: 20px;
-  background-color: #111;
+  background-color: #222;
   color: #666;
   display: flex;
   flex-direction: column;
@@ -12,7 +12,7 @@ const FooterContainer = styled.footer`
   font-size: 0.8rem;
   text-align: center;
   gap: 10px;
-  border-top: 1px solid #222;
+  border-top: 1px solid #444;
   user-select: none;
 
   strong {
