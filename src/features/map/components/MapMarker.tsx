@@ -11,6 +11,7 @@ interface IMapMarkerProps {
   isCollected: boolean;
   onClick?: (() => void) | undefined;
   size: number;
+  color?: string;
   onLeftClick?: () => void;
   onRightClick?: () => void;
 }
@@ -20,18 +21,33 @@ function MapMarker({
   icon,
   isCollected,
   size,
+  color = "#80AEFE",
   onLeftClick,
   onRightClick,
 }: IMapMarkerProps) {
+  const strongOutlineStyle = "drop-shadow(0 0 2px rgba(0, 0, 0, 0.8)) drop-shadow(0 0 1px black)";
+  const subtleShadowStyle = "drop-shadow(0 2px 4px rgba(0, 0, 0, 0.4))";
+  const collectedFilter = "grayscale(100%) drop-shadow(1px 1px 1px rgba(0,0,0,0.3))";
+
   const customIcon = useMemo(() => {
-    const mainIconStyle = {
-      opacity: isCollected ? 0.5 : 1,
-      filter: isCollected
-        ? "grayscale(100%) drop-shadow(1px 1px 1px rgba(0,0,0,0.3))"
-        : "drop-shadow(3px 3px 3px rgba(0,0,0,0.5))",
+    const isImage = typeof icon === "string";
+    let appliedFilter = "none";
+
+    if (isCollected) {
+      appliedFilter = collectedFilter;
+    } else if (isImage) {
+      appliedFilter = subtleShadowStyle;
+    } else {
+      appliedFilter = strongOutlineStyle;
+    }
+    const mainIconStyle: React.CSSProperties = {
+      opacity: isCollected ? 0.7 : 1,
+      filter: appliedFilter,
       transition: "all 0.3s ease",
       width: `${size}px`,
       height: `${size}px`,
+      objectFit: "contain",
+      color: color,
     };
 
     const checkIconStyle: React.CSSProperties = {
@@ -54,7 +70,7 @@ function MapMarker({
     if (typeof icon === "string") {
       iconHtmlStr = renderToStaticMarkup(
         <div style={wrapperStyle}>
-          <img src={icon} alt="marker" style={{ ...mainIconStyle, objectFit: "contain" }} />
+          <img src={icon} alt="marker" style={mainIconStyle} />
 
           {isCollected && <FaCheck size={size * 0.5} style={checkIconStyle} />}
         </div>,
@@ -69,7 +85,6 @@ function MapMarker({
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              color: "#80AEFE",
             }}
           >
             <IconComponent size={size - 8} />
@@ -86,7 +101,7 @@ function MapMarker({
       iconSize: [size, size],
       iconAnchor: typeof icon === "string" ? [size / 2, size] : [size / 2, size / 2],
     });
-  }, [icon, size, isCollected]);
+  }, [icon, size, isCollected, color]);
 
   return (
     <Marker
@@ -113,6 +128,7 @@ export default memo(MapMarker, (prev, next) => {
     prev.isCollected === next.isCollected &&
     prev.icon === next.icon &&
     prev.position[0] === next.position[0] &&
-    prev.position[1] === next.position[1]
+    prev.position[1] === next.position[1] &&
+    prev.color === next.color
   );
 });

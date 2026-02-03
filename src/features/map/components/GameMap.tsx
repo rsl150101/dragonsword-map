@@ -12,7 +12,7 @@ import LocationLogger from "./LocationLogger";
 import CustomZoomControl from "./CustomZoomControl";
 import { useMapStore } from "../store/useMapStore";
 import { MAP_MARKERS } from "../data/mapMarkers";
-import { COUNTABLE_TYPES, FILTER_DATA, RESPAWN_TIMES } from "../data/mapFilters";
+import { COUNTABLE_TYPES, FILTER_DATA, getColorForType, RESPAWN_TIMES } from "../data/mapFilters";
 import MapPaths from "./MapPath";
 
 const WorldMapContainer = styled.div`
@@ -71,6 +71,7 @@ export function GameMap() {
   const [map, setMap] = useState<L.Map | null>(null);
   const [currentZoom, setCurrentZoom] = useState(-1);
   const [now, setNow] = useState(() => Date.now());
+  const showPaths = currentZoom >= -1;
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -132,7 +133,7 @@ export function GameMap() {
         <MapEvents onZoomChange={setCurrentZoom} />
         <LocationLogger />
         <ImageOverlay url="/map.webp" bounds={bounds} />
-        <MapPaths />
+        <MapPaths isVisible={showPaths} />
         <MarkerClusterGroup
           chunkedLoading
           iconCreateFunction={createCustomClusterIcon}
@@ -147,6 +148,7 @@ export function GameMap() {
             }
 
             const iconUrl = marker.icon || getIconForType(marker.type);
+            const markerColor = getColorForType(marker.type);
 
             const isCollected = checkIsCollected(marker.id, marker.type);
             const isCountable = COUNTABLE_TYPES.has(marker.type);
@@ -159,6 +161,7 @@ export function GameMap() {
                 key={marker.id}
                 position={marker.position}
                 icon={iconUrl}
+                color={markerColor}
                 isCollected={isCollected}
                 onLeftClick={() => setFocusedMarkerId(marker.id)}
                 onRightClick={allowedRightClick ? () => toggleCollected(marker.id) : undefined}

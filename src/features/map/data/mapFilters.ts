@@ -1,4 +1,5 @@
 import type { IconType } from "react-icons";
+import { FaMapMarkerAlt } from "react-icons/fa";
 import { FaEgg, FaGamepad, FaPuzzlePiece, FaBuildingColumns } from "react-icons/fa6";
 import {
   GiSquirrel,
@@ -13,6 +14,7 @@ export interface IFilterItem {
   id: string;
   label: string;
   icon: string | IconType;
+  color?: string;
 }
 
 export interface ICategoryItem {
@@ -61,19 +63,47 @@ export const FILTER_DATA: ICategoryItem[] = [
   {
     category: "채집/파밍",
     items: [
-      { id: "squirrel", label: "다람쥐", icon: GiSquirrel },
-      { id: "potato", label: "감자", icon: GiPotato },
-      { id: "blue_lotus_mushroom", label: "푸른 연꽃 버섯", icon: GiMushrooms },
+      { id: "squirrel", label: "다람쥐", icon: GiSquirrel, color: "#FF9F43" },
+      { id: "potato", label: "감자", icon: GiPotato, color: "#F8EFBA" },
+      { id: "blue_lotus_mushroom", label: "푸른 연꽃 버섯", icon: GiMushrooms, color: "#00D2D3" },
       // { id: "bird_egg", label: "알", icon: FaEgg },
     ],
   },
   {
     category: "탐험/보물",
     items: [
-      { id: "marmot", label: "미니게임", icon: FaGamepad },
-      { id: "puzzle", label: "퍼즐", icon: FaPuzzlePiece },
-      // { id: "chest", label: "상자", icon: GiOpenChest },
-      // { id: "special_chest", label: "달의 상자", icon: GiOpenTreasureChest },
+      { id: "marmot", label: "미니게임", icon: FaGamepad, color: "#FF7675" },
+      { id: "puzzle", label: "퍼즐", icon: FaPuzzlePiece, color: "#A29BFE" },
+      // { id: "chest", label: "상자", icon: GiOpenChest , color: "#FFD700"},
+      // { id: "special_chest", label: "달의 상자", icon: GiOpenTreasureChest, color: "#74B9FF" },
     ],
   },
 ];
+
+const COLOR_MAP: Record<string, string> = {};
+const ICON_MAP: Record<string, IconType | string> = {};
+
+FILTER_DATA.forEach((category) => {
+  category.items.forEach((item) => {
+    COLOR_MAP[item.id] = item.color || "#FFFFFF";
+    ICON_MAP[item.id] = item.icon;
+  });
+});
+
+/**
+ * 마커 타입(ID)에 해당하는 색상을 반환합니다.
+ * @param type 마커의 type ID (예: 'chest_common')
+ * @returns Hex Color String (기본값: 흰색)
+ */
+export const getColorForType = (type: string): string => {
+  return COLOR_MAP[type] || "#FFFFFF";
+};
+
+/**
+ * 마커 타입(ID)에 해당하는 아이콘을 반환합니다.
+ * @param type 마커의 type ID
+ * @returns React Icon Component 또는 이미지 경로
+ */
+export const getIconForType = (type: string): IconType | string => {
+  return ICON_MAP[type] || FaMapMarkerAlt;
+};

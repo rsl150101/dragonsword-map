@@ -1,4 +1,4 @@
-import { memo, useMemo } from "react";
+import { Fragment, memo, useMemo } from "react";
 import { Polyline } from "react-leaflet";
 import { useMapStore } from "../store/useMapStore";
 import { MAP_MARKERS } from "../data/mapMarkers";
@@ -11,7 +11,11 @@ const ROUTE_COLORS: Record<string, string> = {
   default: "#ffffff",
 };
 
-function MapPaths() {
+interface MapPathsProps {
+  isVisible: boolean;
+}
+
+function MapPaths({ isVisible }: MapPathsProps) {
   const { selectedFilters } = useMapStore(
     useShallow((state) => ({
       selectedFilters: state.selectedFilters,
@@ -19,6 +23,8 @@ function MapPaths() {
   );
 
   const routes = useMemo(() => {
+    if (!isVisible) return {};
+
     const groups: Record<string, typeof MAP_MARKERS> = {};
 
     MAP_MARKERS.forEach((marker) => {
@@ -35,30 +41,42 @@ function MapPaths() {
     });
 
     return groups;
-  }, [selectedFilters]);
+  }, [selectedFilters, isVisible]);
   return (
     <>
       {Object.entries(routes).map(([routeId, markers]) => {
         if (markers.length < 2) return null;
 
         const positions = markers.map((m) => m.position);
-
         const type = markers[0].type;
         const color = ROUTE_COLORS[type] || ROUTE_COLORS["default"];
 
         return (
-          <Polyline
-            key={routeId}
-            positions={positions}
-            pathOptions={{
-              color: color,
-              weight: 3,
-              opacity: 0.8,
-              dashArray: "5, 5",
-              lineCap: "round",
-              lineJoin: "round",
-            }}
-          />
+          <Fragment key={routeId}>
+            <Polyline
+              positions={positions}
+              pathOptions={{
+                color: "black",
+                weight: 6,
+                opacity: 0.2,
+                lineCap: "round",
+                lineJoin: "round",
+              }}
+            />
+
+            <Polyline
+              key={routeId}
+              positions={positions}
+              pathOptions={{
+                color: color,
+                weight: 3,
+                opacity: 1,
+                dashArray: "5, 5",
+                lineCap: "round",
+                lineJoin: "round",
+              }}
+            />
+          </Fragment>
         );
       })}
     </>
