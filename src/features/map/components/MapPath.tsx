@@ -1,6 +1,6 @@
 import { memo, useMemo } from "react";
 import { Polyline } from "react-leaflet";
-import { useMapStore } from "../../../store/useMapStore";
+import { useMapStore } from "../store/useMapStore";
 import { MAP_MARKERS } from "../data/mapMarkers";
 import { useShallow } from "zustand/shallow";
 

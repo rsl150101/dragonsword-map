@@ -1,8 +1,8 @@
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
-import { COUNTABLE_TYPES, FILTER_DATA, RESPAWN_TIMES } from "../features/map/data/mapFilters";
-import { MAP_MARKERS } from "../features/map/data/mapMarkers";
+import { COUNTABLE_TYPES, FILTER_DATA, RESPAWN_TIMES } from "../data/mapFilters";
+import { MAP_MARKERS } from "../data/mapMarkers";
 
 interface MapState {
   selectedFilters: Set<string>;
@@ -15,6 +15,7 @@ interface MapState {
   focusedMarkerId: string | null;
   setFocusedMarkerId: (id: string | null) => void;
   isCollected: (markerId: string, type: string) => boolean;
+  setCollectedMarkers: (markers: Record<string, number>) => void;
 }
 
 export const useMapStore = create<MapState>()(
@@ -93,12 +94,16 @@ export const useMapStore = create<MapState>()(
 
         return now < respawnAt;
       },
+
+      setCollectedMarkers: (markers) => set({ collectedMarkers: markers }),
     }),
     {
       name: "map-storage",
       storage: createJSONStorage(() => localStorage),
 
-      partialize: (state) => ({ collectedMarkers: state.collectedMarkers }),
+      partialize: (state) => ({
+        collectedMarkers: state.collectedMarkers,
+      }),
     },
   ),
 );

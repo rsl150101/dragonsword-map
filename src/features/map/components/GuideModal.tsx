@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { FaTimes, FaCheck, FaUndo, FaExternalLinkAlt } from "react-icons/fa";
 import { useShallow } from "zustand/shallow";
 
-import { useMapStore } from "../../../store/useMapStore";
+import { useMapStore } from "../store/useMapStore";
 import { MAP_MARKERS } from "../data/mapMarkers";
 import { COUNTABLE_TYPES, RESPAWN_TIMES } from "../data/mapFilters";
 import { useRespawnTimer } from "../../../hooks/useRespawnTimer";

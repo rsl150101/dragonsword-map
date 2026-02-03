@@ -10,7 +10,7 @@ import "leaflet.markercluster";
 import MapMarker from "./MapMarker";
 import LocationLogger from "./LocationLogger";
 import CustomZoomControl from "./CustomZoomControl";
-import { useMapStore } from "../../../store/useMapStore";
+import { useMapStore } from "../store/useMapStore";
 import { MAP_MARKERS } from "../data/mapMarkers";
 import { COUNTABLE_TYPES, FILTER_DATA, RESPAWN_TIMES } from "../data/mapFilters";
 import MapPaths from "./MapPath";
