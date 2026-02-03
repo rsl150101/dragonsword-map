@@ -8,7 +8,7 @@ import MarkerClusterGroup from "react-leaflet-cluster";
 import "leaflet.markercluster";
 
 import MapMarker from "./MapMarker";
-import LocationLogger from "./LocationLogger";
+// import LocationLogger from "./LocationLogger";
 import CustomZoomControl from "./CustomZoomControl";
 import { useMapStore } from "../store/useMapStore";
 import { MAP_MARKERS } from "../data/mapMarkers";
@@ -38,6 +38,10 @@ const ControllerWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+
+  @media (max-width: 768px) {
+    display: none;
+  }
 `;
 
 const mapWidth = 7430;
@@ -131,7 +135,7 @@ export function GameMap() {
         doubleClickZoom={false}
       >
         <MapEvents onZoomChange={setCurrentZoom} />
-        <LocationLogger />
+        {/* <LocationLogger /> */}
         <ImageOverlay url="/map.webp" bounds={bounds} />
         <MapPaths isVisible={showPaths} />
         <MarkerClusterGroup

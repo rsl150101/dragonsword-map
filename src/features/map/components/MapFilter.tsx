@@ -11,9 +11,8 @@ const FilterWrapper = styled.div`
   gap: 10px;
   padding: 10px;
   background: #2c323d;
-  height: 100%;
-  overflow-y: auto;
   user-select: none;
+  min-height: 100%;
 `;
 
 const GlobalControl = styled.div`
