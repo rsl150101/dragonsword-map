@@ -1,8 +1,14 @@
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
-import { COUNTABLE_TYPES, FILTER_DATA, RESPAWN_TIMES } from "../data/mapFilters";
+import {
+  COUNTABLE_TYPES,
+  FILTER_DATA,
+  RESPAWN_TIMES,
+  WEEKLY_RESET_TYPES,
+} from "../data/mapFilters";
 import { MAP_MARKERS } from "../data/mapMarkers";
+import { getLastWeeklyResetTime } from "../utils/timeUtils";
 
 interface MapState {
   selectedFilters: Set<string>;
@@ -16,6 +22,7 @@ interface MapState {
   setFocusedMarkerId: (id: string | null) => void;
   isCollected: (markerId: string, type: string) => boolean;
   setCollectedMarkers: (markers: Record<string, number>) => void;
+  refreshCollectedMarkers: () => void;
 }
 
 export const useMapStore = create<MapState>()(
@@ -55,11 +62,29 @@ export const useMapStore = create<MapState>()(
       toggleCollected: (markerId) =>
         set((state) => {
           const newCollected = { ...state.collectedMarkers };
-          if (newCollected[markerId]) {
-            delete newCollected[markerId];
-          } else {
+          const collectedAt = newCollected[markerId];
+
+          const marker = MAP_MARKERS.find((m) => m.id === markerId);
+
+          if (!collectedAt || !marker) {
             newCollected[markerId] = Date.now();
+            return { collectedMarkers: newCollected };
           }
+
+          let isExpired = false;
+
+          if (WEEKLY_RESET_TYPES.has(marker.type)) {
+            const lastResetTime = getLastWeeklyResetTime();
+            if (collectedAt <= lastResetTime) {
+              isExpired = true;
+            }
+          }
+          if (isExpired) {
+            newCollected[markerId] = Date.now();
+          } else {
+            delete newCollected[markerId];
+          }
+
           return { collectedMarkers: newCollected };
         }),
 
@@ -85,6 +110,11 @@ export const useMapStore = create<MapState>()(
         const collectedAt = get().collectedMarkers[markerId];
         if (!collectedAt) return false;
 
+        if (WEEKLY_RESET_TYPES.has(type)) {
+          const lastResetTime = getLastWeeklyResetTime();
+          return collectedAt > lastResetTime;
+        }
+
         const respawnDuration = RESPAWN_TIMES[type];
 
         if (!respawnDuration) return true;
@@ -96,6 +126,25 @@ export const useMapStore = create<MapState>()(
       },
 
       setCollectedMarkers: (markers) => set({ collectedMarkers: markers }),
+
+      refreshCollectedMarkers: () =>
+        set((state) => {
+          const newCollected = { ...state.collectedMarkers };
+          const lastResetTime = getLastWeeklyResetTime();
+          let hasChanges = false;
+
+          Object.keys(newCollected).forEach((id) => {
+            const marker = MAP_MARKERS.find((m) => m.id === id);
+            if (!marker || !WEEKLY_RESET_TYPES.has(marker.type)) return;
+
+            if (newCollected[id] <= lastResetTime) {
+              delete newCollected[id];
+              hasChanges = true;
+            }
+          });
+
+          return hasChanges ? { collectedMarkers: newCollected } : state;
+        }),
     }),
     {
       name: "map-storage",

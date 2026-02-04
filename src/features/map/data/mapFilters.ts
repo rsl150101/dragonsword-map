@@ -39,6 +39,8 @@ export const RESPAWN_TIMES: Record<string, number> = {
   blue_lotus_mushroom: 4 * 60 * 60 * 1000,
 };
 
+export const WEEKLY_RESET_TYPES = new Set(["world_boss"]);
+
 export const FILTER_DATA: ICategoryItem[] = [
   {
     category: "이동/거점",

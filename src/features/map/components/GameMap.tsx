@@ -76,22 +76,41 @@ export function GameMap() {
   const [currentZoom, setCurrentZoom] = useState(-1);
   const [now, setNow] = useState(() => Date.now());
   const showPaths = currentZoom >= -1;
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setNow(Date.now());
-    }, 1000);
-    return () => clearInterval(timer);
-  }, []);
-
-  const { selectedFilters, collectedMarkers, toggleCollected, setFocusedMarkerId } = useMapStore(
+  const {
+    selectedFilters,
+    collectedMarkers,
+    toggleCollected,
+    setFocusedMarkerId,
+    refreshCollectedMarkers,
+  } = useMapStore(
     useShallow((state) => ({
       selectedFilters: state.selectedFilters,
       collectedMarkers: state.collectedMarkers,
       toggleCollected: state.toggleCollected,
       setFocusedMarkerId: state.setFocusedMarkerId,
+      refreshCollectedMarkers: state.refreshCollectedMarkers,
     })),
   );
+
+  useEffect(() => {
+    refreshCollectedMarkers();
+
+    const uiTimer = setInterval(() => {
+      setNow(Date.now());
+    }, 1000);
+
+    const cleanupTimer = setInterval(() => {
+      const today = new Date().getDay();
+      if (today === 1) {
+        refreshCollectedMarkers();
+      }
+    }, 60 * 1000);
+
+    return () => {
+      clearInterval(uiTimer);
+      clearInterval(cleanupTimer);
+    };
+  }, [refreshCollectedMarkers]);
 
   const markerSize = 32 + (currentZoom + 2) * 8;
 
