@@ -142,7 +142,7 @@ const WarningBox = styled.div`
   border-radius: 6px;
   display: flex;
   gap: 10px;
-  align-items: flex-start;
+  align-items: center;
   color: #ffab00;
   font-size: 11px;
   line-height: 1.4;
@@ -174,8 +174,8 @@ const MobileFooterWrapper = styled.div`
 `;
 
 function Sidebar({ onClose }: { onClose?: () => void }) {
-  const APP_VERSION = "v0.2.0-alpha";
-  const LAST_UPDATE = "2026.02.03";
+  const APP_VERSION = "v0.3.0-alpha";
+  const LAST_UPDATE = "2026.02.05";
 
   const [isExpanded, setIsExpanded] = useState(false);
 

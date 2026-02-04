@@ -4,7 +4,7 @@ import { useShallow } from "zustand/shallow";
 
 import { useMapStore } from "../store/useMapStore";
 import { MAP_MARKERS } from "../data/mapMarkers";
-import { COUNTABLE_TYPES, RESPAWN_TIMES } from "../data/mapFilters";
+import { COUNTABLE_TYPES, RESPAWN_TIMES, WEEKLY_RESET_TYPES } from "../data/mapFilters";
 import { useRespawnTimer } from "../../../hooks/useRespawnTimer";
 
 const Overlay = styled.div`
@@ -153,6 +153,7 @@ function GuideModal() {
 
   const isCountable = COUNTABLE_TYPES.has(marker.type);
   const hasRespawnTime = !!RESPAWN_TIMES[marker.type];
+  const isWeeklyReset = WEEKLY_RESET_TYPES.has(marker.type);
 
   const showCollectButton = isCountable || hasRespawnTime;
   const isCurrentlyCollected = !!collectedAt && !isRespawned;
@@ -196,6 +197,21 @@ function GuideModal() {
               }}
             >
               ⏳ {timeLeft}
+            </div>
+          )}
+
+          {isCurrentlyCollected && isWeeklyReset && (
+            <div
+              style={{
+                background: "#333",
+                padding: "10px",
+                borderRadius: "6px",
+                textAlign: "center",
+                color: "#ff9800",
+                fontWeight: "bold",
+              }}
+            >
+              ⏳ 매주 월요일 오전 9시 초기화
             </div>
           )}
 

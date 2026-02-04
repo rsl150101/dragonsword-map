@@ -8,7 +8,11 @@ import {
   GiBlacksmith,
   GiPotato,
   GiMushrooms,
+  GiBrute,
+  GiCrackedDisc,
 } from "react-icons/gi";
+import { RiFilePaper2Fill } from "react-icons/ri";
+import { TbGhost2Filled } from "react-icons/tb";
 
 export interface IFilterItem {
   id: string;
@@ -26,6 +30,10 @@ export const COUNTABLE_TYPES = new Set([
   "world_boss",
   "puzzle",
   "marmot",
+  "local_mission",
+  "surprise_mission",
+  "ghost",
+  "crack",
   // "chest",
   // "special_chest",
   // "squirrel",
@@ -39,7 +47,13 @@ export const RESPAWN_TIMES: Record<string, number> = {
   blue_lotus_mushroom: 4 * 60 * 60 * 1000,
 };
 
-export const WEEKLY_RESET_TYPES = new Set(["world_boss"]);
+export const WEEKLY_RESET_TYPES = new Set([
+  "world_boss",
+  "crack",
+  "local_mission",
+  "ghost",
+  "surprise_mission",
+]);
 
 export const FILTER_DATA: ICategoryItem[] = [
   {
@@ -59,7 +73,16 @@ export const FILTER_DATA: ICategoryItem[] = [
       { id: "dungeon", label: "일반 던전", icon: "dungeon-icon-on.png" },
       { id: "material_dungeon", label: "재화 던전", icon: "material-dungeon-icon-on.png" },
       { id: "trait_dungeon", label: "특성 던전", icon: "trait-dungeon-icon-on.png" },
+    ],
+  },
+  {
+    category: "주간 숙제",
+    items: [
       { id: "world_boss", label: "월드 보스", icon: "world-boss-icon-on.png" },
+      { id: "crack", label: "균열", icon: GiCrackedDisc, color: "#8E44AD" },
+      { id: "surprise_mission", label: "돌발 임무", icon: GiBrute, color: "#FF5252" },
+      { id: "local_mission", label: "지역 임무", icon: RiFilePaper2Fill, color: "#FFC107" },
+      { id: "ghost", label: "유령", icon: TbGhost2Filled, color: "#DFE6E9" },
     ],
   },
   {

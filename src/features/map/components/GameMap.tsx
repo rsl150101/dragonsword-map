@@ -166,18 +166,40 @@ export function GameMap() {
           spiderfyOnMaxZoom={false}
         >
           {MAP_MARKERS.map((marker) => {
-            if (!selectedFilters.has(marker.type)) {
-              return null;
-            }
+            let isCollected = false;
+            let isVisible = false;
+            let parentMarker = undefined;
 
-            const iconUrl = marker.icon || getIconForType(marker.type);
+            if (marker.parentId) {
+              parentMarker = MAP_MARKERS.find((m) => m.id === marker.parentId);
+              if (parentMarker && selectedFilters.has(parentMarker.type)) {
+                isVisible = true;
+              }
+            } else {
+              if (selectedFilters.has(marker.type)) {
+                isVisible = true;
+              }
+            }
+            if (!isVisible) return null;
+
+            const iconUrl = marker.icon || getIconForType(marker.type) || "waypoint-default.png";
             const markerColor = getColorForType(marker.type);
 
-            const isCollected = checkIsCollected(marker.id, marker.type);
-            const isCountable = COUNTABLE_TYPES.has(marker.type);
-            const hasRespawnTime = !!RESPAWN_TIMES[marker.type];
+            if (parentMarker) {
+              isCollected = checkIsCollected(parentMarker.id, parentMarker.type);
+            } else {
+              isCollected = checkIsCollected(marker.id, marker.type);
+            }
 
-            const allowedRightClick = isCountable || hasRespawnTime;
+            const isWaypoint = !!marker.parentId;
+
+            const onRightClick = isWaypoint
+              ? undefined
+              : COUNTABLE_TYPES.has(marker.type) || RESPAWN_TIMES[marker.type]
+                ? () => toggleCollected(marker.id)
+                : undefined;
+
+            const displaySize = isWaypoint ? markerSize * 0.5 : markerSize;
 
             return (
               <MapMarker
@@ -186,9 +208,9 @@ export function GameMap() {
                 icon={iconUrl}
                 color={markerColor}
                 isCollected={isCollected}
-                onLeftClick={() => setFocusedMarkerId(marker.id)}
-                onRightClick={allowedRightClick ? () => toggleCollected(marker.id) : undefined}
-                size={markerSize}
+                onLeftClick={() => setFocusedMarkerId(marker.parentId || marker.id)}
+                onRightClick={onRightClick ? () => toggleCollected(marker.id) : undefined}
+                size={displaySize}
               />
             );
           })}

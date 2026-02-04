@@ -8,6 +8,10 @@ const ROUTE_COLORS: Record<string, string> = {
   squirrel: "#A6744E",
   potato: "#EFE3B2",
   blue_lotus_mushroom: "#00A5BC",
+  ghost: "#DFE6E9",
+  world_boss: "#FFC107",
+  surprise_mission: "#FFC107",
+  local_mission: "#FFC107",
   default: "#ffffff",
 };
 
@@ -28,7 +32,18 @@ function MapPaths({ isVisible }: MapPathsProps) {
     const groups: Record<string, typeof MAP_MARKERS> = {};
 
     MAP_MARKERS.forEach((marker) => {
-      if (!marker.routeId || !selectedFilters.has(marker.type)) return;
+      if (!marker.routeId) return;
+      let isVisible = false;
+
+      if (selectedFilters.has(marker.type)) {
+        isVisible = true;
+      } else if (marker.parentId) {
+        const parent = MAP_MARKERS.find((m) => m.id === marker.parentId);
+        if (parent && selectedFilters.has(parent.type)) {
+          isVisible = true;
+        }
+      }
+      if (!isVisible) return;
 
       if (!groups[marker.routeId]) {
         groups[marker.routeId] = [];

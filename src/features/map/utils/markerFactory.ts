@@ -1,3 +1,4 @@
+import { FaCircle } from "react-icons/fa";
 import type { IMarkerData } from "../data/mapMarkers";
 
 const TYPE_NAMES: Record<string, string> = {
@@ -9,6 +10,8 @@ const TYPE_NAMES: Record<string, string> = {
   blue_lotus_mushroom: "푸른 연꽃 버섯",
   marmot: "미니게임",
   puzzle: "퍼즐",
+  ghost: "유령",
+  local_mission: "지역 임무",
 };
 
 const createMarker =
@@ -50,6 +53,32 @@ export const GENERATORS = {
   TRAIT_DUNGEON: createMarker("trait_dungeon"),
   WORLD_BOSS: createMarker("world_boss"),
 
+  CRACK: {
+    DC: createMarker("crack", {
+      description: "5곳 랜덤 순서로 등장",
+      author: "(주간퀘)돌발 의뢰, 토벌 임무 정리 - 디시인사이드",
+      sourceUrl: "https://gall.dcinside.com/mgallery/board/view/?id=dragonsword&no=9197",
+    }),
+  },
+  SURPRISE_MISSION: {
+    DC: createMarker("surprise_mission", {
+      author: "(주간퀘)돌발 의뢰, 토벌 임무 정리 - 디시인사이드",
+      sourceUrl: "https://gall.dcinside.com/mgallery/board/view/?id=dragonsword&no=9197",
+    }),
+  },
+  GHOST: {
+    DC: createMarker("ghost", {
+      author: "(주간퀘)돌발 의뢰, 토벌 임무 정리 - 디시인사이드",
+      sourceUrl: "https://gall.dcinside.com/mgallery/board/view/?id=dragonsword&no=9197",
+    }),
+  },
+  LOCAL_MISSION: {
+    DC: createMarker("local_mission", {
+      author: "(주간퀘)돌발 의뢰, 토벌 임무 정리 - 디시인사이드",
+      sourceUrl: "https://gall.dcinside.com/mgallery/board/view/?id=dragonsword&no=9197",
+    }),
+  },
+
   SQUIRREL: {
     OFFICIAL: createMarker("squirrel", {
       author: "다람쥐 런 - 공식 커뮤니티",
@@ -81,4 +110,5 @@ export const GENERATORS = {
       sourceUrl: "https://gall.dcinside.com/mgallery/board/view/?id=dragonsword&no=2342",
     }),
   },
+  WAYPOINT_GHOST: createMarker("waypoint_ghost", { icon: FaCircle }),
 };
