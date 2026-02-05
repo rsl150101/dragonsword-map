@@ -138,33 +138,36 @@ export const MAP_MARKERS: IMarkerData[] = [
 
   GENERATORS.SURPRISE_MISSION.DC(1, [1834, 4010], {
     label: "기회주의자 그리믹",
-    description: "몬스터는 언덕 안에 있음",
+    description: "연계 퀘스트 있음! 몬스터는 언덕 안에 있음",
   }),
   GENERATORS.SURPRISE_MISSION.DC(2, [1929, 3963], {
     label: "점화자 스닉락",
-    description: "몬스터는 언덕 안 중앙 기둥에 있음",
+    description: "연계 퀘스트 있음! 몬스터는 언덕 안 중앙 기둥에 있음",
     routeId: "sm_quest_1",
   }),
   GENERATORS.SURPRISE_MISSION.DC(3, [2612, 2578], {
     label: "피범벅 크레즐",
-    description: "지역 임무 NPC 앞에 돌무더기 부수고 내려가면 있음",
+    description: "연계 퀘스트 있음! 지역 임무 NPC 앞에 돌무더기 부수고 내려가면 있음",
     routeId: "sm_quest_2",
   }),
   GENERATORS.SURPRISE_MISSION.DC(4, [2716, 3369], {
     label: "해골머리 루카키",
-    description: "지역 임무 NPC 앞에 동굴 안에 있음",
+    description: "연계 퀘스트 있음! 지역 임무 NPC 앞에 동굴 안에 있음",
     routeId: "sm_quest_3",
   }),
   GENERATORS.SURPRISE_MISSION.DC(5, [3163, 1946], {
     label: "부족 용사 바쉬",
+    description: "연계 퀘스트 있음! ",
     routeId: "sm_quest_4",
   }),
   GENERATORS.SURPRISE_MISSION.DC(6, [3919, 4000], {
     label: "사나운 킁킁이",
+    description: "연계 퀘스트 있음! ",
     routeId: "sm_quest_5",
   }),
   GENERATORS.SURPRISE_MISSION.DC(7, [4212, 4841], {
-    label: "사나운 킁킁이",
+    label: "꿰뚫는 젝타르",
+    description: "연계 퀘스트 있음! ",
     routeId: "sm_quest_6",
   }),
   GENERATORS.SURPRISE_MISSION.DC(8, [2005, 2820], {

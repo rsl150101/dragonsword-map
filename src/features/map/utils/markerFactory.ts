@@ -12,6 +12,7 @@ const TYPE_NAMES: Record<string, string> = {
   puzzle: "퍼즐",
   ghost: "유령",
   local_mission: "지역 임무",
+  crack: "균열"
 };
 
 const createMarker =
