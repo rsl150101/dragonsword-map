@@ -131,15 +131,29 @@ export const useMapStore = create<MapState>()(
         set((state) => {
           const newCollected = { ...state.collectedMarkers };
           const lastResetTime = getLastWeeklyResetTime();
+          const now = Date.now();
           let hasChanges = false;
 
           Object.keys(newCollected).forEach((id) => {
             const marker = MAP_MARKERS.find((m) => m.id === id);
-            if (!marker || !WEEKLY_RESET_TYPES.has(marker.type)) return;
+            if (!marker) return;
 
-            if (newCollected[id] <= lastResetTime) {
-              delete newCollected[id];
-              hasChanges = true;
+            const collectedAt = newCollected[id];
+
+            if (WEEKLY_RESET_TYPES.has(marker.type)) {
+              if (collectedAt <= lastResetTime) {
+                delete newCollected[id];
+                hasChanges = true;
+                return;
+              }
+            }
+
+            const respawnDuration = RESPAWN_TIMES[marker.type];
+            if (respawnDuration) {
+              if (now >= collectedAt + respawnDuration) {
+                delete newCollected[id];
+                hasChanges = true;
+              }
             }
           });
 

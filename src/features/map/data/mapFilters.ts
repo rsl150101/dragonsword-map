@@ -10,8 +10,11 @@ import {
   GiMushrooms,
   GiBrute,
   GiCrackedDisc,
+  GiPlantSeed,
+  GiTomato,
+  GiMinerals,
 } from "react-icons/gi";
-import { RiFilePaper2Fill } from "react-icons/ri";
+import { RiFilePaper2Fill, RiTreasureMapFill } from "react-icons/ri";
 import { TbGhost2Filled } from "react-icons/tb";
 
 export interface IFilterItem {
@@ -34,9 +37,9 @@ export const COUNTABLE_TYPES = new Set([
   "surprise_mission",
   "ghost",
   "crack",
+  "special_chest",
   // "chest",
-  // "special_chest",
-  // "squirrel",
+  "squirrel",
   // "bird_egg"
 ]);
 
@@ -44,7 +47,14 @@ export const RESPAWN_TIMES: Record<string, number> = {
   squirrel: 12 * 60 * 60 * 1000,
   potato: 4 * 60 * 60 * 1000,
   bird_egg: 4 * 60 * 60 * 1000,
+  goose_egg: 4 * 60 * 60 * 1000,
   blue_lotus_mushroom: 4 * 60 * 60 * 1000,
+  round_eggplant: 4 * 60 * 60 * 1000,
+  leaf_tomato: 4 * 60 * 60 * 1000,
+  memories_crystal: 4 * 60 * 60 * 1000,
+  recollection_crystal: 4 * 60 * 60 * 1000,
+  remembrance_crystal: 4 * 60 * 60 * 1000,
+  oblivion_crystal: 4 * 60 * 60 * 1000,
 };
 
 export const WEEKLY_RESET_TYPES = new Set([
@@ -57,25 +67,6 @@ export const WEEKLY_RESET_TYPES = new Set([
 
 export const FILTER_DATA: ICategoryItem[] = [
   {
-    category: "이동/거점",
-    items: [
-      { id: "warp", label: "워프포인트", icon: "warp-point-icon-on.png" },
-      { id: "statue", label: "여신상", icon: "statue-icon.png" },
-      { id: "merchant", label: "상점", icon: "merchant-icon-on.png" },
-      { id: "windmill", label: "에오나", icon: "windmill-icon.png" },
-      { id: "building", label: "건물", icon: FaBuildingColumns },
-      { id: "workshop", label: "공방", icon: GiBlacksmith },
-    ],
-  },
-  {
-    category: "던전/전투",
-    items: [
-      { id: "dungeon", label: "일반 던전", icon: "dungeon-icon-on.png" },
-      { id: "material_dungeon", label: "재화 던전", icon: "material-dungeon-icon-on.png" },
-      { id: "trait_dungeon", label: "특성 던전", icon: "trait-dungeon-icon-on.png" },
-    ],
-  },
-  {
     category: "주간 숙제",
     items: [
       { id: "world_boss", label: "월드 보스", icon: "world-boss-icon-on.png" },
@@ -86,21 +77,55 @@ export const FILTER_DATA: ICategoryItem[] = [
     ],
   },
   {
-    category: "채집/파밍",
-    items: [
-      { id: "squirrel", label: "다람쥐", icon: GiSquirrel, color: "#FF9F43" },
-      { id: "potato", label: "감자", icon: GiPotato, color: "#F8EFBA" },
-      { id: "blue_lotus_mushroom", label: "푸른 연꽃 버섯", icon: GiMushrooms, color: "#00D2D3" },
-      // { id: "bird_egg", label: "알", icon: FaEgg },
-    ],
-  },
-  {
     category: "탐험/보물",
     items: [
       { id: "marmot", label: "미니게임", icon: FaGamepad, color: "#FF7675" },
       { id: "puzzle", label: "퍼즐", icon: FaPuzzlePiece, color: "#A29BFE" },
       // { id: "chest", label: "상자", icon: GiOpenChest , color: "#FFD700"},
-      // { id: "special_chest", label: "달의 상자", icon: GiOpenTreasureChest, color: "#74B9FF" },
+      // { id: "treasure_chest", label: "상자", icon: RiTreasureMapFill , color: "#DAB88B"},
+      { id: "special_chest", label: "달의 상자", icon: GiOpenTreasureChest, color: "#C084FC" },
+    ],
+  },
+  {
+    category: "퍼밀리어",
+    items: [{ id: "squirrel", label: "다람쥐", icon: GiSquirrel, color: "#A6744E" }],
+  },
+  {
+    category: "식재료",
+    items: [
+      { id: "potato", label: "감자", icon: GiPotato, color: "#F8EFBA" },
+      { id: "blue_lotus_mushroom", label: "푸른 연꽃 버섯", icon: GiMushrooms, color: "#00D2D3" },
+      { id: "goose_egg", label: "거위 알", icon: FaEgg, color: "#F7F1E3" },
+      { id: "round_eggplant", label: "동글가지", icon: GiPlantSeed, color: "#A55EEA" },
+      { id: "leaf_tomato", label: "잎새 토마토", icon: GiTomato, color: "#FC5C65" },
+    ],
+  },
+  {
+    category: "채광",
+    items: [
+      { id: "memories_crystal", label: "추억의 결정", icon: GiMinerals, color: "#FF0000" },
+      { id: "recollection_crystal", label: "회상의 결정", icon: GiMinerals, color: "#F39C12" },
+      { id: "remembrance_crystal", label: "기억의 결정", icon: GiMinerals, color: "#00D8FF" },
+      { id: "oblivion_crystal", label: "망각의 결정", icon: GiMinerals, color: "#4834D4" },
+    ],
+  },
+  {
+    category: "이동/거점",
+    items: [
+      { id: "warp", label: "워프포인트", icon: "warp-point-icon-on.png" },
+      { id: "statue", label: "여신상", icon: "statue-icon.png" },
+      { id: "merchant", label: "상점", icon: "merchant-icon-on.png" },
+      { id: "windmill", label: "에오나", icon: "windmill-icon.png" },
+      { id: "building", label: "건물", icon: FaBuildingColumns, color: "#95A5A6" },
+      { id: "workshop", label: "공방", icon: GiBlacksmith, color: "#A52A2A" },
+    ],
+  },
+  {
+    category: "던전",
+    items: [
+      { id: "dungeon", label: "일반 던전", icon: "dungeon-icon-on.png" },
+      { id: "material_dungeon", label: "재화 던전", icon: "material-dungeon-icon-on.png" },
+      { id: "trait_dungeon", label: "특성 던전", icon: "trait-dungeon-icon-on.png" },
     ],
   },
 ];

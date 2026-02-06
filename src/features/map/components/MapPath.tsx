@@ -8,10 +8,14 @@ const ROUTE_COLORS: Record<string, string> = {
   squirrel: "#A6744E",
   potato: "#EFE3B2",
   blue_lotus_mushroom: "#00A5BC",
+  round_eggplant: "#A55EEA",
   ghost: "#DFE6E9",
   world_boss: "#FFC107",
   surprise_mission: "#FFC107",
   local_mission: "#FFC107",
+  oblivion_crystal: "#4834D4",
+  waypoint_oblivion_crystal: "#4834D4",
+  waypoint_special_chest: "#C084FC",
   default: "#ffffff",
 };
 

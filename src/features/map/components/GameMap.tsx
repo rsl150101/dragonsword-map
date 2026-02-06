@@ -97,19 +97,10 @@ export function GameMap() {
 
     const uiTimer = setInterval(() => {
       setNow(Date.now());
+      refreshCollectedMarkers();
     }, 1000);
 
-    const cleanupTimer = setInterval(() => {
-      const today = new Date().getDay();
-      if (today === 1) {
-        refreshCollectedMarkers();
-      }
-    }, 60 * 1000);
-
-    return () => {
-      clearInterval(uiTimer);
-      clearInterval(cleanupTimer);
-    };
+    return () => clearInterval(uiTimer);
   }, [refreshCollectedMarkers]);
 
   const markerSize = 32 + (currentZoom + 2) * 8;
@@ -183,7 +174,7 @@ export function GameMap() {
             if (!isVisible) return null;
 
             const iconUrl = marker.icon || getIconForType(marker.type) || "waypoint-default.png";
-            const markerColor = getColorForType(marker.type);
+            const markerColor = marker.color || getColorForType(marker.type);
 
             if (parentMarker) {
               isCollected = checkIsCollected(parentMarker.id, parentMarker.type);

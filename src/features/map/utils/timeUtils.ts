@@ -15,6 +15,11 @@ export function getLastWeeklyResetTime(): number {
   //   kstDate.setUTCDate(kstDate.getUTCDate() - diffToWednesday);
   //   kstDate.setUTCHours(18, 43, 0, 0);
 
+  // const diffToFriday = day >= 5 ? day - 5 : day + 2;
+
+  // kstDate.setUTCDate(kstDate.getUTCDate() - diffToFriday);
+  // kstDate.setUTCHours(20, 2, 0, 0);
+
   if (kstDate.getTime() > utcTimestamp + kstOffset) {
     kstDate.setUTCDate(kstDate.getUTCDate() - 7);
   }

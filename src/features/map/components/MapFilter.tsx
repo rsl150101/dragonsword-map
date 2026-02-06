@@ -168,7 +168,15 @@ function MapFilter() {
     } else {
       const IconComponent = item.icon;
 
-      return <IconComponent size={size} />;
+      return (
+        <IconComponent
+          size={size}
+          style={{
+            color: item.color,
+            filter: "drop-shadow(0 0 2px rgba(0, 0, 0, 0.2)) drop-shadow(0 0 1px black)",
+          }}
+        />
+      );
     }
   };
 

@@ -174,8 +174,8 @@ const MobileFooterWrapper = styled.div`
 `;
 
 function Sidebar({ onClose }: { onClose?: () => void }) {
-  const APP_VERSION = "v0.3.1-alpha";
-  const LAST_UPDATE = "2026.02.05";
+  const APP_VERSION = "v0.3.2-alpha";
+  const LAST_UPDATE = "2026.02.06";
 
   const [isExpanded, setIsExpanded] = useState(false);
 
