@@ -25,6 +25,11 @@ interface MapState {
   refreshCollectedMarkers: () => void;
 }
 
+interface MapPersistedState {
+  collectedMarkers: Record<string, number>;
+  selectedFilters: string[];
+}
+
 export const useMapStore = create<MapState>()(
   persist(
     (set, get) => ({
@@ -166,7 +171,21 @@ export const useMapStore = create<MapState>()(
 
       partialize: (state) => ({
         collectedMarkers: state.collectedMarkers,
+        selectedFilters: Array.from(state.selectedFilters),
       }),
+      merge: (persistedState: unknown, currentState) => {
+        const savedState = persistedState as MapPersistedState | undefined;
+        const savedFilters = savedState?.selectedFilters;
+
+        const savedMarkers = savedState?.collectedMarkers;
+
+        return {
+          ...currentState,
+          collectedMarkers: savedMarkers || currentState.collectedMarkers,
+
+          selectedFilters: savedFilters ? new Set(savedFilters) : currentState.selectedFilters,
+        };
+      },
     },
   ),
 );

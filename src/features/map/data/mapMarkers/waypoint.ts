@@ -14,6 +14,11 @@ export const WAYPOINT_MARKER: IMarkerData[] = [
   GENERATORS.WAYPOINT_GHOST(4, [2024, 4188], { parentId: "ghost_4", routeId: "ghost_south_1" }),
   GENERATORS.WAYPOINT_GHOST(5, [1374, 2392], { parentId: "ghost_5", routeId: "ghost_sw_1" }),
 
+  GENERATORS.WAYPOINT_PUZZLE(1, [3023, 3647], {
+    parentId: "puzzle_38",
+    routeId: "puzzle_center_1",
+  }),
+
   GENERATORS.WAYPOINT_SPECIAL_CHEST(1, [2291, 3356], {
     parentId: "special_chest_11",
     routeId: "special_chest_south_1",

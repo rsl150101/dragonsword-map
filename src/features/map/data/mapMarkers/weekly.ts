@@ -91,7 +91,7 @@ export const WEEKLY_MARKER: IMarkerData[] = [
     description: "무너진 성역 던전 타고 내려가면 있음 소환수 무시하고 브라하임 잡을 것",
   }),
 
-  GENERATORS.LOCAL_MISSION.DC(1, [2387, 3145], {
+  GENERATORS.LOCAL_MISSION.DC(1, [2377, 3145], {
     description: "낮에만 등장하며 호르그 잡기 전에 미리 받자",
     routeId: "wb_quest_1",
   }),

@@ -2,7 +2,7 @@ import styled from "styled-components";
 import * as L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { ImageOverlay, MapContainer, useMapEvents } from "react-leaflet";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useShallow } from "zustand/shallow";
 import MarkerClusterGroup from "react-leaflet-cluster";
 import "leaflet.markercluster";
@@ -103,7 +103,7 @@ export function GameMap() {
     return () => clearInterval(uiTimer);
   }, [refreshCollectedMarkers]);
 
-  const markerSize = 32 + (currentZoom + 2) * 8;
+  const markerSize = 32 + (currentZoom + 1) * 8;
 
   const createCustomClusterIcon = (cluster: L.MarkerCluster) => {
     const count = cluster.getChildCount();
@@ -129,6 +129,11 @@ export function GameMap() {
     return now < timestamp + duration;
   };
 
+  const dynamicRadius = useMemo(() => {
+    if (currentZoom >= -1) return 10;
+    return 60;
+  }, [currentZoom]);
+
   return (
     <WorldMapContainer>
       <StyledMapContainer
@@ -149,12 +154,11 @@ export function GameMap() {
         <ImageOverlay url="/map.webp" bounds={bounds} />
         <MapPaths isVisible={showPaths} />
         <MarkerClusterGroup
+          key={dynamicRadius}
           chunkedLoading
           iconCreateFunction={createCustomClusterIcon}
-          maxClusterRadius={60}
-          disableClusteringAtZoom={-1}
+          maxClusterRadius={dynamicRadius}
           showCoverageOnHover={false}
-          spiderfyOnMaxZoom={false}
         >
           {MAP_MARKERS.map((marker) => {
             let isCollected = false;

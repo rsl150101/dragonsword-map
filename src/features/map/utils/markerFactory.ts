@@ -6,17 +6,19 @@ const TYPE_NAMES: Record<string, string> = {
   statue: "여신상",
   windmill: "에오나",
   squirrel: "다람쥐",
+  bird_egg: "새알",
   potato: "감자",
   blue_lotus_mushroom: "푸른 연꽃 버섯",
   goose_egg: "거위 알",
   round_eggplant: "동글가지",
+  leaf_tomato: "잎새 토마토",
+  conch: "소라",
   marmot: "미니게임",
   puzzle: "퍼즐",
   special_chest: "달의 상자",
   ghost: "유령",
   local_mission: "지역 임무",
   crack: "균열",
-  leaf_tomato: "잎새 토마토",
   memories_crystal: "추억의 결정",
   recollection_crystal: "회상의 결정",
   remembrance_crystal: "기억의 결정",
@@ -95,6 +97,17 @@ export const GENERATORS = {
       sourceUrl: "https://dragonsword.webzen.co.kr/board/1079/detail/386380",
     }),
   },
+  BIRD_EGG: {
+    DC: createMarker("bird_egg", {
+      author: "새알 위치 공유 97개 - 디시인사이드",
+      sourceUrl: "https://gall.dcinside.com/mgallery/board/view/?id=dragonsword&no=4565",
+    }),
+    DC_addition: createMarker("bird_egg", {
+      author: "오르비스 왕성 안 새 알 위치 - 디시인사이드",
+      sourceUrl: "https://gall.dcinside.com/mgallery/board/view/?id=dragonsword&no=8531",
+    }),
+  },
+
   POTATO: {
     DC: createMarker("potato", {
       author: "감자런 뛰기 - 디시인사이드",
@@ -125,6 +138,12 @@ export const GENERATORS = {
       sourceUrl: "https://dragonsword.webzen.co.kr/board/1079/detail/387160",
     }),
   },
+  CONCH: {
+    DC: createMarker("conch", {
+      author: "⭐3 해산물 소라 스폰 위치 모음 - 디시인사이드",
+      sourceUrl: "https://gall.dcinside.com/mgallery/board/view/?id=dragonsword&no=8297",
+    }),
+  },
 
   MARMOT: {
     DC: createMarker("marmot", {
@@ -138,6 +157,7 @@ export const GENERATORS = {
       sourceUrl: "https://gall.dcinside.com/mgallery/board/view/?id=dragonsword&no=2342",
     }),
   },
+  WAYPOINT_PUZZLE: createMarker("waypoint_puzzle", { icon: FaCircle }),
   SPECIAL_CHEST: {
     DC: createMarker("special_chest", {
       author: "달의 열쇠 상자 총31개 - 디시인사이드",

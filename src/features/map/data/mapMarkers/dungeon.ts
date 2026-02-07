@@ -8,7 +8,7 @@ export const DUNGEON_MARKER: IMarkerData[] = [
   GENERATORS.DUNGEON(4, [5053, 5800], { label: "뒤얽힌 뿌리의 숲" }),
   GENERATORS.DUNGEON(5, [5119, 2422], { label: "녹슨 엄니 도적단 보물 창고" }),
   GENERATORS.DUNGEON(6, [3431, 3884], { label: "지하 고블린 부락" }),
-  GENERATORS.DUNGEON(7, [3605, 3350], { label: "오염된 침소" }),
+  GENERATORS.DUNGEON(7, [3635, 3340], { label: "오염된 침소" }),
   GENERATORS.DUNGEON(8, [3031, 4390], { label: "해안 절벽 동굴 거점" }),
   GENERATORS.DUNGEON(9, [2867, 2662], { label: "와르그 동굴" }),
   GENERATORS.DUNGEON(10, [2599, 2460], { label: "고블린 도적단 동굴" }),
@@ -20,5 +20,5 @@ export const DUNGEON_MARKER: IMarkerData[] = [
   GENERATORS.MATERIAL_DUNGEON(2, [2999, 1918], { label: "용 숭배자 폐허" }),
   GENERATORS.MATERIAL_DUNGEON(3, [2325, 3600], { label: "끝없는 소환지" }),
 
-  GENERATORS.TRAIT_DUNGEON(1, [3289, 3798], { label: "특성 던전" }),
+  GENERATORS.TRAIT_DUNGEON(1, [3317, 3798], { label: "특성 던전" }),
 ];

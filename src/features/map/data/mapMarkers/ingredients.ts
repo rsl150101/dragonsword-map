@@ -194,4 +194,137 @@ export const INGREDIENTS_MARKER: IMarkerData[] = [
   GENERATORS.LEAF_TOMATO.OFFICIAL(8, [2028, 3677], { description: "3개" }),
   GENERATORS.LEAF_TOMATO.OFFICIAL(9, [2123, 3498], { description: "2개" }),
   GENERATORS.LEAF_TOMATO.OFFICIAL(10, [2102, 3439]),
+
+  GENERATORS.CONCH.DC(1, [2959, 2183], { description: "폭포 앞 바위 부근 2개" }),
+  GENERATORS.CONCH.DC(2, [2935, 1953], { description: "절벽 부근 바다 안 2개" }),
+  GENERATORS.CONCH.DC(3, [2915, 1673], { description: "바위 부근 3개" }),
+  GENERATORS.CONCH.DC(4, [2830, 1749]),
+  GENERATORS.CONCH.DC(5, [2803, 1757], { description: "바위 부근 2개" }),
+  GENERATORS.CONCH.DC(6, [2678, 1739]),
+  GENERATORS.CONCH.DC(7, [2663, 1817], { description: "기억의 결정 부근 2개" }),
+  GENERATORS.CONCH.DC(8, [2616, 1743], { description: "해안가 바위 부근 2개 (잠수해야 됨)" }),
+  GENERATORS.CONCH.DC(9, [2567, 2066], { description: "바다에 잠긴 바위 부근 2개 (잠수해야 됨)" }),
+  GENERATORS.CONCH.DC(10, [2611, 2208], {
+    description: "난파된 배 있는 바위 말고 옆 바위 부근 2개 (잠수해야 됨)",
+  }),
+  GENERATORS.CONCH.DC(11, [2709, 2351], {
+    description: "바다 안 바위 부근 2개 (잠수해야 됨)",
+  }),
+  GENERATORS.CONCH.DC(12, [2814, 2234], {
+    description: "바다 안 바위 부근 2개 (잠수해야 됨)",
+  }),
+  GENERATORS.CONCH.DC(13, [2831, 2175], {
+    description: "바위 부근 2개",
+  }),
+  GENERATORS.CONCH.DC(14, [2721, 2002], {
+    description: "바다에 잠긴 돌 부근 3개 (잠수해야 됨)",
+  }),
+  GENERATORS.CONCH.DC(15, [1592, 2451], {
+    description: "바위 부근 1개 (잠수해야 됨)",
+  }),
+  GENERATORS.CONCH.DC(16, [1757, 2479], {
+    description: "바다에 잠긴 돌 부근 2개 (잠수해야 됨)",
+  }),
+  GENERATORS.CONCH.DC(17, [1756, 2393], {
+    description: "바위 부근 2개 (잠수해야 됨)",
+  }),
+  GENERATORS.CONCH.DC(18, [1854, 2299], {
+    description: "바위 부근 2개 (잠수해야 됨)",
+  }),
+  GENERATORS.CONCH.DC(19, [1715, 2336], {
+    description: "바위 부근 1개 (잠수해야 됨)",
+  }),
+  GENERATORS.CONCH.DC(20, [1671, 2323], {
+    description: "바위 부근 2개 (잠수해야 됨)",
+  }),
+  GENERATORS.CONCH.DC(21, [1629, 2323], {
+    description: "바위 부근 1개 (잠수해야 됨)",
+  }),
+  GENERATORS.CONCH.DC(22, [1532, 2344], {
+    description: "바위 부근 1개 (잠수해야 됨)",
+  }),
+  GENERATORS.CONCH.DC(23, [1490, 2311], {
+    description: "바위 부근 2개 (잠수해야 됨)",
+  }),
+  GENERATORS.CONCH.DC(24, [1409, 2242], {
+    description: "바다에 잠긴 돌 부근 2개 (잠수해야 됨)",
+  }),
+  GENERATORS.CONCH.DC(25, [1362, 2214], {
+    description: "바위 부근 2개 (잠수해야 됨)",
+  }),
+  GENERATORS.CONCH.DC(26, [1373, 2302], {
+    description: "바위 부근 2개 (잠수해야 됨)",
+  }),
+  GENERATORS.CONCH.DC(27, [1305, 2108], {
+    description: "바위 부근 2개 (잠수해야 됨)",
+  }),
+  GENERATORS.CONCH.DC(28, [1652, 2020], {
+    description: "절벽 부근 2개 (잠수해야 됨)",
+  }),
+  GENERATORS.CONCH.DC(29, [1638, 2606], {
+    description: "해안가 부근 해초에 2개 (잠수해야 됨)",
+  }),
+  GENERATORS.CONCH.DC(30, [1531, 2916], {
+    description: "돌 부근 2개 (잠수해야 됨)",
+  }),
+  GENERATORS.CONCH.DC(31, [1618, 3029], {
+    description: "물에 잠긴 돌 부근 2개 (잠수해야 됨)",
+  }),
+  GENERATORS.CONCH.DC(32, [1542, 3153], {
+    description: "물에 잠긴 돌 부근 2개 (잠수해야 됨)",
+  }),
+  GENERATORS.CONCH.DC(33, [1505, 3265], {
+    description: "물에 잠긴 해초 부근 1개 (잠수해야 됨)",
+  }),
+  GENERATORS.CONCH.DC(34, [1666, 3380], {
+    description: "물에 잠긴 돌 부근 2개 (잠수해야 됨)",
+  }),
+  GENERATORS.CONCH.DC(35, [1669, 3517], {
+    description: "물에 잠긴 돌 부근 3개 (잠수해야 됨)",
+  }),
+  GENERATORS.CONCH.DC(36, [1729, 3615], {
+    description: "바위 부근 2개 (잠수해야 됨)",
+  }),
+  GENERATORS.CONCH.DC(37, [1802, 3532], {
+    description: "선착장 돌 부근 1개 (잠수해야 됨)",
+  }),
+  GENERATORS.CONCH.DC(38, [3073, 4852], {
+    description: "돌 부근 2개",
+  }),
+  GENERATORS.CONCH.DC(39, [2868, 4607], {
+    description: "물에 잠긴 돌 부근 1개 (잠수해야 됨)",
+  }),
+  GENERATORS.CONCH.DC(40, [2888, 4486], {
+    description: "물에 잠긴 돌 부근 2개 (잠수해야 됨)",
+  }),
+  GENERATORS.CONCH.DC(41, [2942, 4388], {
+    description: "물가에 쐐기 파편 있는 바위 쪽 해초 부근 1개 (잠수해야 됨)",
+  }),
+  GENERATORS.CONCH.DC(42, [2824, 4241], {
+    description: "물가에 2개",
+  }),
+  GENERATORS.CONCH.DC(43, [2277, 4385], {
+    description: "돌 부근 2개",
+  }),
+  GENERATORS.CONCH.DC(44, [2246, 4244], {
+    description: "해초 부근 3개 (잠수해야 됨)",
+  }),
+  GENERATORS.CONCH.DC(45, [2034, 4037], {
+    description: "돌 부근 1개",
+  }),
+  GENERATORS.CONCH.DC(46, [2169, 3908], {
+    description: "물에 잠긴 돌 부근 2개 (잠수해야 됨)",
+  }),
+  GENERATORS.CONCH.DC(47, [2272, 3772], {
+    description: "돌 무더기 부근 2개",
+  }),
+  GENERATORS.CONCH.DC(48, [2400, 3841], {
+    description: "돌 무더기 해초 부근 2개",
+  }),
+  GENERATORS.CONCH.DC(49, [2573, 3687], {
+    description: "해초 부근 2개 (잠수해야 됨)",
+  }),
+  GENERATORS.CONCH.DC(50, [2704, 3604], {
+    description: "물에 잠긴 돌 부근 1개 (잠수해야 됨)",
+  }),
 ];

@@ -13,6 +13,8 @@ import {
   GiPlantSeed,
   GiTomato,
   GiMinerals,
+  GiSpiralShell,
+  GiNestBirds,
 } from "react-icons/gi";
 import { RiFilePaper2Fill, RiTreasureMapFill } from "react-icons/ri";
 import { TbGhost2Filled } from "react-icons/tb";
@@ -40,7 +42,7 @@ export const COUNTABLE_TYPES = new Set([
   "special_chest",
   // "chest",
   "squirrel",
-  // "bird_egg"
+  "bird_egg",
 ]);
 
 export const RESPAWN_TIMES: Record<string, number> = {
@@ -51,6 +53,7 @@ export const RESPAWN_TIMES: Record<string, number> = {
   blue_lotus_mushroom: 4 * 60 * 60 * 1000,
   round_eggplant: 4 * 60 * 60 * 1000,
   leaf_tomato: 4 * 60 * 60 * 1000,
+  conch: 4 * 60 * 60 * 1000,
   memories_crystal: 4 * 60 * 60 * 1000,
   recollection_crystal: 4 * 60 * 60 * 1000,
   remembrance_crystal: 4 * 60 * 60 * 1000,
@@ -88,7 +91,10 @@ export const FILTER_DATA: ICategoryItem[] = [
   },
   {
     category: "퍼밀리어",
-    items: [{ id: "squirrel", label: "다람쥐", icon: GiSquirrel, color: "#A6744E" }],
+    items: [
+      { id: "squirrel", label: "다람쥐", icon: GiSquirrel, color: "#A6744E" },
+      { id: "bird_egg", label: "새알", icon: GiNestBirds, color: "#6D4C41" },
+    ],
   },
   {
     category: "식재료",
@@ -98,6 +104,7 @@ export const FILTER_DATA: ICategoryItem[] = [
       { id: "goose_egg", label: "거위 알", icon: FaEgg, color: "#F7F1E3" },
       { id: "round_eggplant", label: "동글가지", icon: GiPlantSeed, color: "#A55EEA" },
       { id: "leaf_tomato", label: "잎새 토마토", icon: GiTomato, color: "#FC5C65" },
+      { id: "conch", label: "소라", icon: GiSpiralShell, color: "#FFDFBA" },
     ],
   },
   {
