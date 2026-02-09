@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styled, { css } from "styled-components";
-import { FaCheck, FaChevronDown, FaChevronUp, FaRegSquare } from "react-icons/fa";
-import { COUNTABLE_TYPES, FILTER_DATA, type IFilterItem } from "../data/mapFilters";
+import { FaCheck, FaChevronDown, FaChevronUp, FaRegSquare, FaStar } from "react-icons/fa";
+import { COUNTABLE_TYPES, FILTER_DATA, RESPAWN_TIMES, type IFilterItem } from "../data/mapFilters";
 import { useMapStore } from "../store/useMapStore";
 import { useShallow } from "zustand/shallow";
 
@@ -82,6 +82,7 @@ const FilterItemButton = styled.div<{ $isActive: boolean }>`
   cursor: pointer;
   transition: all 0.2s;
   border: 1px solid transparent;
+  position: relative;
 
   ${({ $isActive }) =>
     $isActive
@@ -108,6 +109,20 @@ const FilterItemButton = styled.div<{ $isActive: boolean }>`
         `}
 `;
 
+const StarBadge = styled.div`
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  background: rgba(0, 0, 0, 0.6);
+  color: #ffca28;
+  font-size: 8px;
+  font-weight: bold;
+  padding: 1px 3px;
+  border-radius: 4px;
+  line-height: 1;
+  pointer-events: none;
+`;
+
 const ItemLabel = styled.span`
   font-size: 10px;
   text-align: center;
@@ -125,6 +140,7 @@ function MapFilter() {
     setAllFilters,
     getProgress,
     collectedMarkers,
+    toggleAllCollected,
   } = useMapStore(
     useShallow((state) => ({
       selectedFilters: state.selectedFilters,
@@ -133,6 +149,7 @@ function MapFilter() {
       setAllFilters: state.setAllFilters,
       getProgress: state.getProgress,
       collectedMarkers: state.collectedMarkers,
+      toggleAllCollected: state.toggleAllCollected,
     })),
   );
   const [openCategories, setOpenCategories] = useState<Set<string>>(
@@ -180,6 +197,15 @@ function MapFilter() {
     }
   };
 
+  const handleRightClick = (e: React.MouseEvent, itemId: string) => {
+    e.preventDefault();
+    const isRespawnable = RESPAWN_TIMES[itemId] !== undefined;
+
+    if (COUNTABLE_TYPES.has(itemId) || isRespawnable) {
+      toggleAllCollected(itemId);
+    }
+  };
+
   const isAllChecked = isAllVisible();
 
   const handleGlobalToggle = () => {
@@ -224,8 +250,15 @@ function MapFilter() {
                     key={item.id}
                     $isActive={isActive}
                     onClick={() => toggleFilter(item.id)}
+                    onContextMenu={(e) => handleRightClick(e, item.id)}
                     title={item.label}
                   >
+                    {item.star && (
+                      <StarBadge>
+                        <FaStar size={7} />
+                        {item.star}
+                      </StarBadge>
+                    )}
                     {renderIcon(item)}
                     <ItemLabel>
                       {item.label}

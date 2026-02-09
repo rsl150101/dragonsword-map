@@ -170,5 +170,6 @@ export const FAMILIAR_MARKER: IMarkerData[] = [
   GENERATORS.BIRD_EGG.DC_addition(97, [3585, 2484], { description: "파란 천 뒤 1개" }),
   GENERATORS.BIRD_EGG.DC_addition(98, [3552, 2639], { description: "길드 사무소 지붕 부근 1개" }),
   GENERATORS.BIRD_EGG.DC_addition(99, [3700, 2770], { description: "집 지붕 1개" }),
-  GENERATORS.BIRD_EGG.DC_addition(100, [3544, 2768], { description: "집 지붕 부근 1개" }),
+  GENERATORS.BIRD_EGG.DC_addition(100, [3544, 2768], { description: "집 지붕 밑 1개" }),
+  GENERATORS.BIRD_EGG.DC(101, [4654, 3851], { description: "나무 위 1개" }),
 ];

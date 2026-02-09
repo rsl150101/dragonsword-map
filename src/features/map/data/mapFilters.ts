@@ -15,6 +15,7 @@ import {
   GiMinerals,
   GiSpiralShell,
   GiNestBirds,
+  GiHerbsBundle,
 } from "react-icons/gi";
 import { RiFilePaper2Fill, RiTreasureMapFill } from "react-icons/ri";
 import { TbGhost2Filled } from "react-icons/tb";
@@ -24,6 +25,7 @@ export interface IFilterItem {
   label: string;
   icon: string | IconType;
   color?: string;
+  star?: number;
 }
 
 export interface ICategoryItem {
@@ -54,6 +56,7 @@ export const RESPAWN_TIMES: Record<string, number> = {
   round_eggplant: 4 * 60 * 60 * 1000,
   leaf_tomato: 4 * 60 * 60 * 1000,
   conch: 4 * 60 * 60 * 1000,
+  white_dew_flower: 4 * 60 * 60 * 1000,
   memories_crystal: 4 * 60 * 60 * 1000,
   recollection_crystal: 4 * 60 * 60 * 1000,
   remembrance_crystal: 4 * 60 * 60 * 1000,
@@ -99,12 +102,25 @@ export const FILTER_DATA: ICategoryItem[] = [
   {
     category: "식재료",
     items: [
-      { id: "potato", label: "감자", icon: GiPotato, color: "#F8EFBA" },
-      { id: "blue_lotus_mushroom", label: "푸른 연꽃 버섯", icon: GiMushrooms, color: "#00D2D3" },
-      { id: "goose_egg", label: "거위 알", icon: FaEgg, color: "#F7F1E3" },
-      { id: "round_eggplant", label: "동글가지", icon: GiPlantSeed, color: "#A55EEA" },
-      { id: "leaf_tomato", label: "잎새 토마토", icon: GiTomato, color: "#FC5C65" },
-      { id: "conch", label: "소라", icon: GiSpiralShell, color: "#FFDFBA" },
+      { id: "potato", label: "감자", icon: GiPotato, color: "#F8EFBA", star: 2 },
+      {
+        id: "blue_lotus_mushroom",
+        label: "푸른 연꽃 버섯",
+        icon: GiMushrooms,
+        color: "#00D2D3",
+        star: 3,
+      },
+      { id: "goose_egg", label: "거위 알", icon: FaEgg, color: "#F7F1E3", star: 3 },
+      { id: "round_eggplant", label: "동글가지", icon: GiPlantSeed, color: "#A55EEA", star: 3 },
+      { id: "leaf_tomato", label: "잎새 토마토", icon: GiTomato, color: "#FC5C65", star: 3 },
+      { id: "conch", label: "소라", icon: GiSpiralShell, color: "#FFDFBA", star: 3 },
+      {
+        id: "white_dew_flower",
+        label: "하얀 이슬꽃",
+        icon: GiHerbsBundle,
+        color: "#E0FAFF",
+        star: 3,
+      },
     ],
   },
   {

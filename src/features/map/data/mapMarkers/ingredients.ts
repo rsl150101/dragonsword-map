@@ -327,4 +327,29 @@ export const INGREDIENTS_MARKER: IMarkerData[] = [
   GENERATORS.CONCH.DC(50, [2704, 3604], {
     description: "물에 잠긴 돌 부근 1개 (잠수해야 됨)",
   }),
+
+  GENERATORS.WHITE_DEW_FLOWER.OFFICIAL(1, [2070, 4188], { description: "2개" }),
+  GENERATORS.WHITE_DEW_FLOWER.OFFICIAL(2, [1683, 3629], { description: "언덕 위 1개" }),
+  GENERATORS.WHITE_DEW_FLOWER.OFFICIAL(3, [2550, 2659], { description: "무너진 풍차 뒤 1개" }),
+  GENERATORS.WHITE_DEW_FLOWER.OFFICIAL(4, [2522, 1841], {
+    description: "하얀 꽃 무더기 있는 곳 2개",
+  }),
+  GENERATORS.WHITE_DEW_FLOWER.OFFICIAL(5, [1541, 2113], {
+    description: "워프 타고 부유 타서 올라 오면 2개",
+  }),
+  GENERATORS.WHITE_DEW_FLOWER.OFFICIAL(6, [3780, 2648], {
+    description: "화단에 1개",
+  }),
+  GENERATORS.WHITE_DEW_FLOWER.OFFICIAL(7, [4225, 3571], {
+    description: "언덕 위 나무 부근 2개",
+  }),
+  GENERATORS.WHITE_DEW_FLOWER.OFFICIAL(8, [3120, 3925], {
+    description: "언덕 위 2개",
+  }),
+  GENERATORS.WHITE_DEW_FLOWER.OFFICIAL(9, [4943, 2167], {
+    description: "2개",
+  }),
+  GENERATORS.WHITE_DEW_FLOWER.OFFICIAL(10, [5107, 5413], {
+    description: "2개",
+  }),
 ];

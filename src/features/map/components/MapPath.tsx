@@ -14,6 +14,7 @@ const ROUTE_COLORS: Record<string, string> = {
   surprise_mission: "#FFC107",
   local_mission: "#FFC107",
   oblivion_crystal: "#4834D4",
+  waypoint_surprise_mission: "#FF5252",
   waypoint_puzzle: "#A29BFE",
   waypoint_oblivion_crystal: "#4834D4",
   waypoint_special_chest: "#C084FC",

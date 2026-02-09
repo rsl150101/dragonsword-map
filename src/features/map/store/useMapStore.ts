@@ -17,6 +17,7 @@ interface MapState {
   setAllFilters: (enable: boolean) => void;
   collectedMarkers: Record<string, number>;
   toggleCollected: (markerId: string) => void;
+  toggleAllCollected: (typeId: string) => void;
   getProgress: (type?: string) => { current: number; total: number };
   focusedMarkerId: string | null;
   setFocusedMarkerId: (id: string | null) => void;
@@ -88,6 +89,31 @@ export const useMapStore = create<MapState>()(
             newCollected[markerId] = Date.now();
           } else {
             delete newCollected[markerId];
+          }
+
+          return { collectedMarkers: newCollected };
+        }),
+
+      toggleAllCollected: (typeId) =>
+        set((state) => {
+          const targetMarkers = MAP_MARKERS.filter((m) => m.type === typeId);
+          if (targetMarkers.length === 0) return state;
+
+          const newCollected = { ...state.collectedMarkers };
+          const now = Date.now();
+
+          const allCollected = targetMarkers.every((m) => newCollected[m.id]);
+
+          if (allCollected) {
+            targetMarkers.forEach((m) => {
+              delete newCollected[m.id];
+            });
+          } else {
+            targetMarkers.forEach((m) => {
+              if (!newCollected[m.id]) {
+                newCollected[m.id] = now;
+              }
+            });
           }
 
           return { collectedMarkers: newCollected };

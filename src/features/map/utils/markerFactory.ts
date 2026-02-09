@@ -13,6 +13,7 @@ const TYPE_NAMES: Record<string, string> = {
   round_eggplant: "동글가지",
   leaf_tomato: "잎새 토마토",
   conch: "소라",
+  white_dew_flower: "하얀 이슬꽃",
   marmot: "미니게임",
   puzzle: "퍼즐",
   special_chest: "달의 상자",
@@ -77,6 +78,7 @@ export const GENERATORS = {
       sourceUrl: "https://gall.dcinside.com/mgallery/board/view/?id=dragonsword&no=9197",
     }),
   },
+  WAYPOINT_SURPRISE_MISSION: createMarker("waypoint_surprise_mission", { icon: FaCircle }),
   GHOST: {
     DC: createMarker("ghost", {
       author: "(주간퀘)돌발 의뢰, 토벌 임무 정리 - 디시인사이드",
@@ -142,6 +144,12 @@ export const GENERATORS = {
     DC: createMarker("conch", {
       author: "⭐3 해산물 소라 스폰 위치 모음 - 디시인사이드",
       sourceUrl: "https://gall.dcinside.com/mgallery/board/view/?id=dragonsword&no=8297",
+    }),
+  },
+  WHITE_DEW_FLOWER: {
+    OFFICIAL: createMarker("white_dew_flower", {
+      author: "링크용 이슬꽃 위치 - 공식 커뮤니티",
+      sourceUrl: "https://dragonsword.webzen.co.kr/board/915/detail/390609",
     }),
   },
 
