@@ -3,6 +3,7 @@ import { useMapEvents } from "react-leaflet";
 import styled from "styled-components";
 import { useMapStore } from "../store/useMapStore";
 import * as L from "leaflet";
+import { useIsMobileDevice } from "../../../hooks/useIsMobileDevice";
 
 const ContextMenuContainer = styled.div<{ $x: number; $y: number }>`
   position: fixed;
@@ -36,6 +37,8 @@ const ContextMenuContainer = styled.div<{ $x: number; $y: number }>`
 export function MapContextMenu() {
   const [position, setPosition] = useState<{ x: number; y: number } | null>(null);
   const [mapLatLng, setMapLatLng] = useState<[number, number] | null>(null);
+  const isMobileDevice = useIsMobileDevice();
+
   const setCreatingMarkerPos = useMapStore((state) => state.setCreatingMarkerPos);
 
   useMapEvents({
@@ -52,6 +55,7 @@ export function MapContextMenu() {
       setPosition(null);
     },
   });
+  if (isMobileDevice) return null;
 
   const handleOpenAddModal = (e: React.MouseEvent) => {
     e.stopPropagation();

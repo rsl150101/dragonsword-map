@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
-import { z } from "zod"; // Zod import
+import { z } from "zod";
 
 import {
   COUNTABLE_TYPES,
