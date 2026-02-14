@@ -14,6 +14,9 @@ import { useMapStore } from "../store/useMapStore";
 import { MAP_MARKERS } from "../data/mapMarkers";
 import { COUNTABLE_TYPES, FILTER_DATA, getColorForType, RESPAWN_TIMES } from "../data/mapFilters";
 import MapPaths from "./MapPath";
+import { MapContextMenu } from "./MapContextMenu";
+import { AddMarkerModal } from "./AddMarkerModal";
+import { FaStar } from "react-icons/fa";
 
 const WorldMapContainer = styled.div`
   display: flex;
@@ -82,6 +85,7 @@ export function GameMap() {
     toggleCollected,
     setFocusedMarkerId,
     refreshCollectedMarkers,
+    customMarkers,
   } = useMapStore(
     useShallow((state) => ({
       selectedFilters: state.selectedFilters,
@@ -89,6 +93,7 @@ export function GameMap() {
       toggleCollected: state.toggleCollected,
       setFocusedMarkerId: state.setFocusedMarkerId,
       refreshCollectedMarkers: state.refreshCollectedMarkers,
+      customMarkers: state.customMarkers,
     })),
   );
 
@@ -149,6 +154,7 @@ export function GameMap() {
         zoomControl={false}
         doubleClickZoom={false}
       >
+        <MapContextMenu />
         <MapEvents onZoomChange={setCurrentZoom} />
         {/* <LocationLogger /> */}
         <ImageOverlay url="/map.webp" bounds={bounds} />
@@ -177,7 +183,7 @@ export function GameMap() {
             }
             if (!isVisible) return null;
 
-            const iconUrl = marker.icon || getIconForType(marker.type) || "waypoint-default.png";
+            const iconUrl = marker.icon || getIconForType(marker.type);
             const markerColor = marker.color || getColorForType(marker.type);
 
             if (parentMarker) {
@@ -209,9 +215,21 @@ export function GameMap() {
               />
             );
           })}
+          {customMarkers.map((marker) => (
+            <MapMarker
+              key={marker.id}
+              position={marker.position}
+              icon={marker.icon || FaStar}
+              isCollected={false}
+              size={markerSize}
+              color={"#FFD700"}
+              onLeftClick={() => setFocusedMarkerId(marker.id)}
+            />
+          ))}
         </MarkerClusterGroup>
       </StyledMapContainer>
       <ControllerWrapper>{map && <CustomZoomControl map={map} />}</ControllerWrapper>
+      <AddMarkerModal />
     </WorldMapContainer>
   );
 }

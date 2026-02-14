@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
+import { z } from "zod"; // Zod import
 
 import {
   COUNTABLE_TYPES,
@@ -9,6 +10,28 @@ import {
 } from "../data/mapFilters";
 import { MAP_MARKERS } from "../data/mapMarkers";
 import { getLastWeeklyResetTime } from "../utils/timeUtils";
+import type { IMarkerData } from "../data/mapMarkers/types";
+
+const markerSchema = z.object({
+  id: z.string(),
+  type: z.string(),
+  label: z.string(),
+  description: z.string().optional(),
+  isCustom: z.boolean().optional(),
+  position: z.tuple([z.number(), z.number()]),
+  icon: z.any().optional(),
+  color: z.string().optional(),
+});
+
+const storageSchema = z.object({
+  customMarkers: z.array(markerSchema).optional().default([]),
+  selectedFilters: z.array(z.string()).optional().default([]),
+  collectedMarkers: z.record(z.string(), z.number()).optional().default({}),
+});
+
+export interface ICustomMarkerData extends IMarkerData {
+  isCustom: boolean;
+}
 
 interface MapState {
   selectedFilters: Set<string>;
@@ -24,11 +47,11 @@ interface MapState {
   isCollected: (markerId: string, type: string) => boolean;
   setCollectedMarkers: (markers: Record<string, number>) => void;
   refreshCollectedMarkers: () => void;
-}
-
-interface MapPersistedState {
-  collectedMarkers: Record<string, number>;
-  selectedFilters: string[];
+  customMarkers: ICustomMarkerData[];
+  addCustomMarker: (marker: ICustomMarkerData) => void;
+  removeCustomMarker: (id: string) => void;
+  creatingMarkerPos: [number, number] | null;
+  setCreatingMarkerPos: (pos: [number, number] | null) => void;
 }
 
 export const useMapStore = create<MapState>()(
@@ -39,6 +62,20 @@ export const useMapStore = create<MapState>()(
       ),
       collectedMarkers: {},
       focusedMarkerId: null,
+      customMarkers: [],
+      creatingMarkerPos: null,
+
+      setCreatingMarkerPos: (pos) => set({ creatingMarkerPos: pos }),
+
+      addCustomMarker: (marker) =>
+        set((state) => ({
+          customMarkers: [...state.customMarkers, marker],
+        })),
+
+      removeCustomMarker: (id) =>
+        set((state) => ({
+          customMarkers: state.customMarkers.filter((m) => m.id !== id),
+        })),
 
       toggleFilter: (id) =>
         set((state) => {
@@ -198,18 +235,30 @@ export const useMapStore = create<MapState>()(
       partialize: (state) => ({
         collectedMarkers: state.collectedMarkers,
         selectedFilters: Array.from(state.selectedFilters),
+        customMarkers: state.customMarkers,
       }),
       merge: (persistedState: unknown, currentState) => {
-        const savedState = persistedState as MapPersistedState | undefined;
-        const savedFilters = savedState?.selectedFilters;
+        const partialSchema = storageSchema.partial();
+        const result = partialSchema.safeParse(persistedState);
 
-        const savedMarkers = savedState?.collectedMarkers;
+        if (!result.success) {
+          console.warn("스토리지 데이터 손상됨. 초기화 진행.");
+          return currentState;
+        }
+
+        const validData = result.data;
+        const mergedCollectedMarkers = validData.collectedMarkers ?? currentState.collectedMarkers;
+        const mergedCustomMarkers = (validData.customMarkers as ICustomMarkerData[]) ?? [];
+        const mergedSelectedFilters = validData.selectedFilters
+          ? new Set(validData.selectedFilters)
+          : currentState.selectedFilters;
 
         return {
           ...currentState,
-          collectedMarkers: savedMarkers || currentState.collectedMarkers,
-
-          selectedFilters: savedFilters ? new Set(savedFilters) : currentState.selectedFilters,
+          collectedMarkers: mergedCollectedMarkers,
+          customMarkers: mergedCustomMarkers,
+          selectedFilters: mergedSelectedFilters,
+          creatingMarkerPos: currentState.creatingMarkerPos,
         };
       },
     },

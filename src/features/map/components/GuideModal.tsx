@@ -1,11 +1,12 @@
 import styled from "styled-components";
-import { FaTimes, FaCheck, FaUndo, FaExternalLinkAlt } from "react-icons/fa";
+import { FaTimes, FaCheck, FaUndo, FaExternalLinkAlt, FaTrash } from "react-icons/fa";
 import { useShallow } from "zustand/shallow";
 
 import { useMapStore } from "../store/useMapStore";
 import { MAP_MARKERS } from "../data/mapMarkers";
 import { COUNTABLE_TYPES, RESPAWN_TIMES, WEEKLY_RESET_TYPES } from "../data/mapFilters";
 import { useRespawnTimer } from "../../../hooks/useRespawnTimer";
+import { useState } from "react";
 
 const Overlay = styled.div`
   position: fixed;
@@ -134,29 +135,67 @@ const ActionButton = styled.button<{ $isCollected: boolean }>`
     `}
 `;
 
+const DeleteButton = styled(ActionButton)`
+  background: #ff4d4f;
+  &:hover {
+    background: #ff7875;
+  }
+`;
+
 function GuideModal() {
-  const { focusedMarkerId, setFocusedMarkerId, toggleCollected, collectedMarkers } = useMapStore(
+  const {
+    focusedMarkerId,
+    setFocusedMarkerId,
+    toggleCollected,
+    collectedMarkers,
+    customMarkers,
+    removeCustomMarker,
+  } = useMapStore(
     useShallow((state) => ({
       focusedMarkerId: state.focusedMarkerId,
       setFocusedMarkerId: state.setFocusedMarkerId,
       toggleCollected: state.toggleCollected,
       collectedMarkers: state.collectedMarkers,
+      customMarkers: state.customMarkers,
+      removeCustomMarker: state.removeCustomMarker,
     })),
   );
 
-  const marker = focusedMarkerId ? MAP_MARKERS.find((m) => m.id === focusedMarkerId) : undefined;
+  const [deleteConfirmId, setDeleteConfirmId] = useState<string | null>(null);
+
+  if (deleteConfirmId && deleteConfirmId !== focusedMarkerId) {
+    setDeleteConfirmId(null);
+  }
+
+  const marker = focusedMarkerId
+    ? MAP_MARKERS.find((m) => m.id === focusedMarkerId) ||
+      customMarkers.find((m) => m.id === focusedMarkerId)
+    : undefined;
   const collectedAt = marker ? collectedMarkers[marker.id] : undefined;
   const markerType = marker ? marker.type : "";
   const { timeLeft, isRespawned } = useRespawnTimer(collectedAt, markerType);
 
   if (!focusedMarkerId || !marker) return null;
 
+  const isDeleting = deleteConfirmId === marker.id;
+
+  const isCustomMarker = marker.type === "custom";
   const isCountable = COUNTABLE_TYPES.has(marker.type);
   const hasRespawnTime = !!RESPAWN_TIMES[marker.type];
   const isWeeklyReset = WEEKLY_RESET_TYPES.has(marker.type);
 
-  const showCollectButton = isCountable || hasRespawnTime;
+  const showCollectButton = !isCustomMarker && (isCountable || hasRespawnTime);
   const isCurrentlyCollected = !!collectedAt && !isRespawned;
+
+  const handleDeleteClick = () => {
+    if (isDeleting) {
+      removeCustomMarker(marker.id);
+      setDeleteConfirmId(null);
+      setFocusedMarkerId(null);
+    } else {
+      setDeleteConfirmId(marker.id);
+    }
+  };
 
   return (
     <Overlay onClick={() => setFocusedMarkerId(null)}>
@@ -181,7 +220,7 @@ function GuideModal() {
                 borderRadius: "8px",
               }}
             >
-              이미지가 없습니다.
+              {isCustomMarker ? "직접 추가한 마커입니다." : "이미지가 없습니다."}
             </div>
           )}
 
@@ -215,7 +254,9 @@ function GuideModal() {
             </div>
           )}
 
-          <Description>{marker.description || "설명이 없습니다."}</Description>
+          <Description>
+            {marker.description || (isCustomMarker ? "설명이 없습니다." : "설명이 없습니다.")}
+          </Description>
           {marker.sourceUrl && (
             <SourceLink href={marker.sourceUrl} target="_blank" rel="noopener noreferrer">
               <FaExternalLinkAlt size={12} />
@@ -238,6 +279,15 @@ function GuideModal() {
                 </>
               )}
             </ActionButton>
+          )}
+          {isCustomMarker && (
+            <DeleteButton
+              onClick={handleDeleteClick}
+              $isCollected={false}
+              style={{ background: isDeleting ? "#d32f2f" : "#ff4d4f" }}
+            >
+              <FaTrash /> {isDeleting ? "정말 삭제하시겠습니까?" : "삭제하기"}
+            </DeleteButton>
           )}
         </Content>
       </ModalContainer>
