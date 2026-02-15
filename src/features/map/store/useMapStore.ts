@@ -52,6 +52,8 @@ interface MapState {
   removeCustomMarker: (id: string) => void;
   creatingMarkerPos: [number, number] | null;
   setCreatingMarkerPos: (pos: [number, number] | null) => void;
+  resetCustomMarkers: () => void;
+  importCustomMarkers: (markers: ICustomMarkerData[]) => void;
 }
 
 export const useMapStore = create<MapState>()(
@@ -226,6 +228,18 @@ export const useMapStore = create<MapState>()(
           });
 
           return hasChanges ? { collectedMarkers: newCollected } : state;
+        }),
+
+      resetCustomMarkers: () => set({ customMarkers: [] }),
+
+      importCustomMarkers: (newMarkers) =>
+        set((state) => {
+          const existingIds = new Set(state.customMarkers.map((m) => m.id));
+          const uniqueNewMarkers = newMarkers.filter((m) => !existingIds.has(m.id));
+
+          return {
+            customMarkers: [...state.customMarkers, ...uniqueNewMarkers],
+          };
         }),
     }),
     {

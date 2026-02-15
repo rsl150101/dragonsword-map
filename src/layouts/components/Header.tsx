@@ -1,4 +1,8 @@
+import { useState } from "react";
 import styled from "styled-components";
+import { ToastContainer } from "./ToastContainer";
+import { FaCog } from "react-icons/fa";
+import { SettingsModal } from "./SettingsModal";
 
 const HeaderContainer = styled.header`
   height: 60px;
@@ -25,12 +29,39 @@ const Nav = styled.div`
   cursor: pointer;
 `;
 
+const SettingButton = styled.button`
+  background: none;
+  border: none;
+  color: #ccc;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.9rem;
+  padding: 8px;
+  border-radius: 4px;
+  &:hover {
+    background: #333;
+    color: white;
+  }
+`;
+
 const Header = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   return (
-    <HeaderContainer>
-      <Logo>Dracarta</Logo>
-      <Nav></Nav>
-    </HeaderContainer>
+    <>
+      <ToastContainer />
+      <HeaderContainer>
+        <Logo>Dracarta</Logo>
+        <Nav>
+          <SettingButton onClick={() => setIsModalOpen(true)}>
+            <FaCog />
+          </SettingButton>
+        </Nav>
+      </HeaderContainer>
+      {isModalOpen && <SettingsModal onClose={() => setIsModalOpen(false)} />}
+    </>
   );
 };
 
