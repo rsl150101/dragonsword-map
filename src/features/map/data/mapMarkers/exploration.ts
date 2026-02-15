@@ -40,6 +40,7 @@ export const EXPLORATION_MARKER: IMarkerData[] = [
   GENERATORS.MARMOT.DC(36, [3156, 2744]),
   GENERATORS.MARMOT.DC(37, [3693, 3994]),
   GENERATORS.MARMOT.DC(38, [3956, 2854]),
+  GENERATORS.MARMOT.DC(39, [5879, 5215]),
 
   GENERATORS.PUZZLE.DC(1, [1537, 2306]),
   GENERATORS.PUZZLE.DC(2, [1595, 3244]),
@@ -80,7 +81,10 @@ export const EXPLORATION_MARKER: IMarkerData[] = [
   GENERATORS.PUZZLE.DC(37, [6136, 5429], {
     description: "무너진 성역 던전 타고 내려와서 나가는 문 방향 위에 보면 있음",
   }),
-  GENERATORS.PUZZLE.DC(38, [3111, 3686], { description:"흰 점이 입구",routeId: "puzzle_center_1" }),
+  GENERATORS.PUZZLE.DC(38, [3111, 3686], {
+    description: "흰 점이 입구",
+    routeId: "puzzle_center_1",
+  }),
   GENERATORS.PUZZLE.DC(39, [2710, 2486]),
   GENERATORS.PUZZLE.DC(40, [2529, 3562]),
 

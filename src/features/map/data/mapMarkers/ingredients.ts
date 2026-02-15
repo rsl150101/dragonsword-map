@@ -112,6 +112,7 @@ export const INGREDIENTS_MARKER: IMarkerData[] = [
   GENERATORS.GOOSE_EGG.DC(13, [4775, 4581], { description: "2개" }),
   GENERATORS.GOOSE_EGG.DC(14, [4460, 4083], { description: "2개" }),
   GENERATORS.GOOSE_EGG.DC(15, [4305, 4720], { description: "3개" }),
+  GENERATORS.GOOSE_EGG.DC(16, [5024, 4316], { description: "2개" }),
 
   GENERATORS.ROUND_EGGPLANT.DC(1, [2130, 3840], {
     description: "2개",
@@ -351,5 +352,14 @@ export const INGREDIENTS_MARKER: IMarkerData[] = [
   }),
   GENERATORS.WHITE_DEW_FLOWER.OFFICIAL(10, [5107, 5413], {
     description: "2개",
+  }),
+  GENERATORS.WHITE_DEW_FLOWER.OFFICIAL(11, [3547, 4848], {
+    description: "에오나에서 내려와서 북쪽 절벽 방향 1개",
+  }),
+  GENERATORS.WHITE_DEW_FLOWER.OFFICIAL(12, [5968, 5186], {
+    description: "망루 근처 돌 쪽에 1개",
+  }),
+  GENERATORS.WHITE_DEW_FLOWER.OFFICIAL(13, [2460, 3356], {
+    description: "물 근처 3개",
   }),
 ];
