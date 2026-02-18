@@ -16,6 +16,7 @@ import {
   GiSpiralShell,
   GiNestBirds,
   GiHerbsBundle,
+  GiHoneycomb,
 } from "react-icons/gi";
 import { RiFilePaper2Fill, RiTreasureMapFill } from "react-icons/ri";
 import { TbGhost2Filled } from "react-icons/tb";
@@ -57,6 +58,7 @@ export const RESPAWN_TIMES: Record<string, number> = {
   leaf_tomato: 4 * 60 * 60 * 1000,
   conch: 4 * 60 * 60 * 1000,
   white_dew_flower: 4 * 60 * 60 * 1000,
+  honeycomb: 4 * 60 * 60 * 1000,
   memories_crystal: 4 * 60 * 60 * 1000,
   recollection_crystal: 4 * 60 * 60 * 1000,
   remembrance_crystal: 4 * 60 * 60 * 1000,
@@ -121,6 +123,7 @@ export const FILTER_DATA: ICategoryItem[] = [
         color: "#E0FAFF",
         star: 3,
       },
+      { id: "honeycomb", label: "벌꿀", icon: GiHoneycomb, color: "#FFB900", star: 3 },
     ],
   },
   {

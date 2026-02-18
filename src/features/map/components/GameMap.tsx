@@ -8,7 +8,6 @@ import MarkerClusterGroup from "react-leaflet-cluster";
 import "leaflet.markercluster";
 
 import MapMarker from "./MapMarker";
-// import LocationLogger from "./LocationLogger";
 import CustomZoomControl from "./CustomZoomControl";
 import { useMapStore } from "../store/useMapStore";
 import { MAP_MARKERS } from "../data/mapMarkers";
@@ -156,7 +155,6 @@ export function GameMap() {
       >
         <MapContextMenu />
         <MapEvents onZoomChange={setCurrentZoom} />
-        {/* <LocationLogger /> */}
         <ImageOverlay url="/map.webp" bounds={bounds} />
         <MapPaths isVisible={showPaths} />
         <MarkerClusterGroup

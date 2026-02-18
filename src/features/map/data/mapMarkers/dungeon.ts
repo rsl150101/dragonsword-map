@@ -10,7 +10,7 @@ export const DUNGEON_MARKER: IMarkerData[] = [
   GENERATORS.DUNGEON(6, [3431, 3884], { label: "지하 고블린 부락" }),
   GENERATORS.DUNGEON(7, [3635, 3340], { label: "오염된 침소" }),
   GENERATORS.DUNGEON(8, [3031, 4390], { label: "해안 절벽 동굴 거점" }),
-  GENERATORS.DUNGEON(9, [2867, 2662], { label: "와르그 동굴" }),
+  GENERATORS.DUNGEON(9, [2877, 2675], { label: "와르그 동굴" }),
   GENERATORS.DUNGEON(10, [2599, 2460], { label: "고블린 도적단 동굴" }),
   GENERATORS.DUNGEON(11, [2535, 3474], { label: "와르그 사육장" }),
   GENERATORS.DUNGEON(12, [1941, 2708], { label: "은빛 엄니 도적단 물자 창고" }),

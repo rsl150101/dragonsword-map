@@ -14,6 +14,7 @@ const TYPE_NAMES: Record<string, string> = {
   leaf_tomato: "잎새 토마토",
   conch: "소라",
   white_dew_flower: "하얀 이슬꽃",
+  honeycomb: "벌꿀",
   marmot: "미니게임",
   puzzle: "퍼즐",
   special_chest: "달의 상자",
@@ -152,6 +153,12 @@ export const GENERATORS = {
       sourceUrl: "https://dragonsword.webzen.co.kr/board/915/detail/390609",
     }),
   },
+  HONEYCOMB: {
+    DC: createMarker("honeycomb", {
+      author: "⭐3~4성 요리재료 채집 위치 모음",
+      sourceUrl: "https://gall.dcinside.com/mgallery/board/view/?id=dragonsword&no=12480",
+    }),
+  },
 
   MARMOT: {
     DC: createMarker("marmot", {
@@ -181,6 +188,7 @@ export const GENERATORS = {
       author: "추억/회상/기억/망각 결정 위치 공략 - 공식 커뮤니티",
       sourceUrl: "https://dragonsword.webzen.co.kr/board/1079/detail/385931",
     }),
+    DEFAULT: createMarker("memories_crystal"),
   },
   RECOLLECTION_CRYSTAL: {
     OFFICIAL: createMarker("recollection_crystal", {
@@ -193,12 +201,18 @@ export const GENERATORS = {
       author: "추억/회상/기억/망각 결정 위치 공략 - 공식 커뮤니티",
       sourceUrl: "https://dragonsword.webzen.co.kr/board/1079/detail/385931",
     }),
+    ARCALIVE: createMarker("remembrance_crystal", {
+      author: "매핑 지도에 없는 기억 결정 위치",
+      sourceUrl: "https://arca.live/b/dragonsword/162118399",
+    }),
+    DEFAULT: createMarker("remembrance_crystal"),
   },
   OBLIVION_CRYSTAL: {
     OFFICIAL: createMarker("oblivion_crystal", {
       author: "추억/회상/기억/망각 결정 위치 공략 - 공식 커뮤니티",
       sourceUrl: "https://dragonsword.webzen.co.kr/board/1079/detail/385931",
     }),
+    DEFAULT: createMarker("oblivion_crystal"),
   },
   WAYPOINT_OBLIVION_CRYSTAL: createMarker("waypoint_oblivion_crystal", {
     icon: FaCircle,
