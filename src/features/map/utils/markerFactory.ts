@@ -78,6 +78,7 @@ export const GENERATORS = {
       author: "(주간퀘)돌발 의뢰, 토벌 임무 정리 - 디시인사이드",
       sourceUrl: "https://gall.dcinside.com/mgallery/board/view/?id=dragonsword&no=9197",
     }),
+    DEFAULT: createMarker("surprise_mission"),
   },
   WAYPOINT_SURPRISE_MISSION: createMarker("waypoint_surprise_mission", { icon: FaCircle }),
   GHOST: {
@@ -85,6 +86,7 @@ export const GENERATORS = {
       author: "(주간퀘)돌발 의뢰, 토벌 임무 정리 - 디시인사이드",
       sourceUrl: "https://gall.dcinside.com/mgallery/board/view/?id=dragonsword&no=9197",
     }),
+    DEFAULT: createMarker("ghost"),
   },
   WAYPOINT_GHOST: createMarker("waypoint_ghost", { icon: FaCircle, color: "#DFE6E9" }),
   LOCAL_MISSION: {
@@ -92,6 +94,7 @@ export const GENERATORS = {
       author: "(주간퀘)돌발 의뢰, 토벌 임무 정리 - 디시인사이드",
       sourceUrl: "https://gall.dcinside.com/mgallery/board/view/?id=dragonsword&no=9197",
     }),
+    DEFAULT: createMarker("local_mission"),
   },
 
   SQUIRREL: {

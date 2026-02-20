@@ -11,6 +11,10 @@ export const WEEKLY_MARKER: IMarkerData[] = [
     description: "연계 퀘스트 있음! 바로 위 지역 임무1",
     routeId: "wb_quest_1",
   }),
+  GENERATORS.WORLD_BOSS(6, [6287, 4421], {
+    label: "어둠의 사령술사 하겐",
+    description: "여신상 아래층",
+  }),
 
   GENERATORS.CRACK.DC(1, [2908, 3228]),
   GENERATORS.CRACK.DC(2, [4151, 4702]),
@@ -90,6 +94,25 @@ export const WEEKLY_MARKER: IMarkerData[] = [
   GENERATORS.SURPRISE_MISSION.DC(18, [6226, 5432], {
     label: "이단의 인도자 브라하임",
     description: "무너진 성역 던전 타고 내려가면 있음 소환수 무시하고 브라하임 잡을 것",
+  }),
+  GENERATORS.SURPRISE_MISSION.DEFAULT(19, [5835, 3525], {
+    label: "땅을 가르는 크래그모",
+  }),
+  GENERATORS.SURPRISE_MISSION.DEFAULT(20, [6370, 2253], {
+    label: "야성의 날개 바르곤",
+  }),
+  GENERATORS.SURPRISE_MISSION.DEFAULT(21, [7211, 2460], {
+    label: "모래갈퀴 드라그스",
+  }),
+  GENERATORS.SURPRISE_MISSION.DEFAULT(22, [6250, 4316], {
+    label: "공허의 어스름 노르",
+  }),
+  GENERATORS.SURPRISE_MISSION.DEFAULT(23, [6266, 4544], {
+    label: "희미한 장막 쉐르",
+  }),
+  GENERATORS.SURPRISE_MISSION.DEFAULT(24, [5878, 4306], {
+    label: "인도하는 젤무어",
+    description: "워프 아래층에 있음 유체화 상태일 때 계속 때리면 풀림",
   }),
 
   GENERATORS.LOCAL_MISSION.DC(1, [2377, 3145], {
@@ -307,6 +330,30 @@ export const WEEKLY_MARKER: IMarkerData[] = [
     label: "지역 임무 52 초보 용병 에리나 다인",
     description: "배낭 찾기 절벽 위 나무 쪽에 있음",
   }),
+  GENERATORS.LOCAL_MISSION.DEFAULT(53, [5852, 3519], {
+    label: "지역 임무 53 현상금 사냥꾼 웰던",
+    description: "땅을 가르는 크래그모 잡기 전에 미리 받자",
+  }),
+  GENERATORS.LOCAL_MISSION.DEFAULT(54, [6113, 3403], {
+    label: "지역 임무 54 타일러",
+    description: "바위 위가 정답",
+  }),
+  GENERATORS.LOCAL_MISSION.DEFAULT(55, [5456, 3313], {
+    label: "지역 임무 55 타일러",
+    description: "바위 위가 정답",
+  }),
+  GENERATORS.LOCAL_MISSION.DEFAULT(56, [5463, 2810], {
+    label: "지역 임무 56 부상당한 병사",
+    description: "남겨진 동료 구출",
+  }),
+  GENERATORS.LOCAL_MISSION.DEFAULT(57, [5244, 2717], {
+    label: "지역 임무 57 정보원 로파이",
+    description: "워프 옆 지하에서 나무 상자 갖다주기",
+  }),
+  GENERATORS.LOCAL_MISSION.DEFAULT(58, [5964, 2448], {
+    label: "지역 임무 58 하인 피오",
+    description: "아가씨 구출",
+  }),
 
   GENERATORS.GHOST.DC(1, [3023, 1978], {
     routeId: "ghost_west_1",
@@ -319,4 +366,5 @@ export const WEEKLY_MARKER: IMarkerData[] = [
   GENERATORS.GHOST.DC(3, [5538, 6128], { routeId: "ghost_ne_1" }),
   GENERATORS.GHOST.DC(4, [1995, 4021], { routeId: "ghost_south_1" }),
   GENERATORS.GHOST.DC(5, [1408, 2453], { routeId: "ghost_sw_1" }),
+  GENERATORS.GHOST.DEFAULT(6, [5758, 4248], { routeId: "ghost_first_release_north_1" }),
 ];
