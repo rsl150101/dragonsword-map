@@ -114,6 +114,13 @@ export const WEEKLY_MARKER: IMarkerData[] = [
     label: "인도하는 젤무어",
     description: "워프 아래층에 있음 유체화 상태일 때 계속 때리면 풀림",
   }),
+  GENERATORS.SURPRISE_MISSION.DEFAULT(25, [5860, 4252], {
+    label: "핏덩이를 삼키는 그락",
+    description: "워프 아래층에 나무 근처 벽 부수고 길 따라 올라가면 있음",
+  }),
+  GENERATORS.SURPRISE_MISSION.DEFAULT(26, [6242, 4078], {
+    label: "눌러붙은 점액 프렁크",
+  }),
 
   GENERATORS.LOCAL_MISSION.DC(1, [2377, 3145], {
     label: "지역 임무 1 용병 바크 올타 소르자",
@@ -354,6 +361,18 @@ export const WEEKLY_MARKER: IMarkerData[] = [
     label: "지역 임무 58 하인 피오",
     description: "아가씨 구출",
   }),
+  GENERATORS.LOCAL_MISSION.DEFAULT(59, [6281, 3818], {
+    label: "지역 임무 59 타일러",
+    description: "왼쪽이 정답",
+  }),
+  GENERATORS.LOCAL_MISSION.DEFAULT(60, [6148, 4628], {
+    label: "지역 임무 60 부상당한 병사",
+    description: "남겨진 동료 구출",
+  }),
+  GENERATORS.LOCAL_MISSION.DEFAULT(61, [5134, 4379], {
+    label: "지역 임무 61 하인 피오",
+    description: "아가씨 구출",
+  }),
 
   GENERATORS.GHOST.DC(1, [3023, 1978], {
     routeId: "ghost_west_1",
@@ -367,4 +386,5 @@ export const WEEKLY_MARKER: IMarkerData[] = [
   GENERATORS.GHOST.DC(4, [1995, 4021], { routeId: "ghost_south_1" }),
   GENERATORS.GHOST.DC(5, [1408, 2453], { routeId: "ghost_sw_1" }),
   GENERATORS.GHOST.DEFAULT(6, [5758, 4248], { routeId: "ghost_first_release_north_1" }),
+  GENERATORS.GHOST.DEFAULT(7, [5440, 4507], { routeId: "ghost_first_release_north_2" }),
 ];

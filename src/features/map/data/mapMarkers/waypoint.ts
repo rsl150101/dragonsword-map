@@ -17,6 +17,10 @@ export const WAYPOINT_MARKER: IMarkerData[] = [
     parentId: "ghost_6",
     routeId: "ghost_first_release_north_1",
   }),
+  GENERATORS.WAYPOINT_GHOST(7, [5383, 4553], {
+    parentId: "ghost_7",
+    routeId: "ghost_first_release_north_2",
+  }),
 
   GENERATORS.WAYPOINT_SURPRISE_MISSION(1, [2550, 2647], {
     parentId: "surprise_mission_9",
