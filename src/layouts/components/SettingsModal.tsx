@@ -95,7 +95,7 @@ const Input = styled.input`
   }
 `;
 
-const WORKER_URL = "https://dragonsword-map-db.shrill-art-2219.workers.dev";
+const WORKER_URL = import.meta.env.VITE_WORKER_URL;
 
 export const SettingsModal = ({ onClose }: { onClose: () => void }) => {
   const { customMarkers, resetCustomMarkers, importCustomMarkers } = useMapStore();
